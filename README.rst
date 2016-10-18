@@ -3,6 +3,8 @@ pystellib - Making synthetic spectra from libraries
 
 :author: M Fouesneau
 
+full documentation: http://mfouesneau.github.io/docs/pystellibs/
+
 This is a set of tools to compute synthetic spectra from libraries in a simple
 way, ideal to integrate in larger projects.
 
