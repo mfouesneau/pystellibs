@@ -226,8 +226,8 @@ class Stellib(object):
 
         logZ = np.log10(Z)
         aps = np.array([logT, logg, logZ]).T
-        s = self.interpolator.interp(aps) * weights[:, None]
-        specs[bound] = s[bound]
+        s = self.interpolator.interp(aps[bound]) * weights[bound, None]
+        specs[bound] = s
 
         l0 = self.wavelength
         specs = specs * self.flux_units
