@@ -12,7 +12,7 @@ setup(name = "pystellibs",
     author_email = "",
     url = "https://github.com/mfouesneau/pystellibs",
     packages = find_packages(),
-    package_data = {'pystellibs':['libs/*'],
+    package_data = {'pystellibs':['libs/*', 'ezunits/default_en.txt'],
                     'ezunits':['default_en.txt']},
     classifiers=[
       'Development Status :: 3 - Alpha',
