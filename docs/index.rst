@@ -31,6 +31,9 @@ This package provides already multiple input libraries:
 * :class:`pystellibs.kurucz.Kurucz`: Castelli and Kurucz 2004 or ATLAS9
 * :class:`pystellibs.tlusty.Tlusty`: NLTE O, B stars [Lanz, T., & Hubeny, I. (2003)]
 * :class:`pystellibs.elodie.Elodie`: version 3.1, high resolution optical library.
+* :class:`pystellibs.munari.Munari`: extended ATLAS9 stellar atmospheres (Munari et al.  2005 A&A 442 1127)
+* :class:`pystellibs.btsettl.BTSettl`: BT-Settl Library (Allard, Hauschildt and Schweitzer 2000)
+
 
 Future libraries to be included:
 
