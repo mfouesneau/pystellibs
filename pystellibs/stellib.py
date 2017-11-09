@@ -13,18 +13,19 @@ The interpolation is implemented from the pegase.2 fortran converted algorithm.
     (run make once)
 """
 import numpy as np
+from scipy.interpolate import interp1d
+from itertools import groupby
 
 from .ezunits import unit, hasUnit
 from .helpers import nbytes, isNestedInstance
 from .future import Path
-from .interpolator import NDLinearInterpolator
-from .ezmap import map as ezmap
-from .ezmap import Partial
+from .interpolator import NDLinearInterpolator, find_interpolator
 
 
 lsun = 3.839e+26   # in W (Watts)
 sig_stefan = 5.67037321 * 1e-8  # W * m**-2 * K**-4
 rsun = 6.955e8  # in meters
+_default_interpolator = find_interpolator('lejeune')
 
 
 def _drop_units(q):
@@ -45,11 +46,21 @@ class Stellib(object):
     """
     def __init__(self, *args, **kwargs):
         """ Contructor """
-        self.interpolator = kwargs.pop('interpolator', None)
+        self.interpolator = find_interpolator(
+                kwargs.pop('interpolator', None),
+                osl=self)
         if self.interpolator is None:
-            self.interpolator = NDLinearInterpolator(self)
+            self.interpolator = _default_interpolator(self)
         if not hasattr(self, 'wavelength_unit'):
             self.wavelength_unit = None
+        self._dlogT = 0.5
+        self._dlogg = 0.5
+
+    def set_default_extrapolation_bounds(self, dlogT=None, dlogg=None):
+        if dlogT is not None:
+            self._dlogT = dlogT
+        if dlogg is not None:
+            self._dlogg = dlogg
 
     def get_interpolation_data(self):
         """ Default interpolation """
@@ -120,17 +131,16 @@ class Stellib(object):
         Parameters
         ----------
         logT: float or ndarray
-            log-temperatures
+            log-temperatures log(T/K)
         logg: float or ndarray
-            log-gravity
+            log-gravity  log(g)
         logL: float or ndarray
-            bolometric luminosity
+            bolometric luminosity (log (L/Lsun))
         """
         # weights to apply during the interpolation (note that radii must be in cm)
         # Stellar library models are given in cm^-2  ( 4 pi R)
         # Compute radii of each point using log(T) and log(L)
-        Lsun = unit['lsun'].to("ergs/s").magnitude
-        L = 10 ** logL * Lsun
+        L = 10 ** logL * unit['lsun'].to("ergs/s").magnitude
         if weights is not None:
             weights *= L
         else:
@@ -191,7 +201,8 @@ class Stellib(object):
 
         return spec
 
-    def generate_individual_spectra(self, stars, nthreads=0, **kwargs):
+
+    def generate_individual_values(self, stars, values, **kwargs):
         """ Generates individual spectra for the given stars and stellar library
 
         Returns NaN spectra if the boundary conditions are not met (no extrapolation)
@@ -201,17 +212,25 @@ class Stellib(object):
         stars: Table
             contains at least (logT, logg, logL, Z) of the considered stars
 
+        values: sequence or attribute name
+            value to interpolate
+
+        dlogT: float
+            margin in logT
+
+        dlogg: float
+            margin in logg
+
         returns
         -------
-        l0: ndarray, ndim=1
-            wavelength definition of the spectra
-            wavelength in AA
-
-        s0: ndarray, shape=(len(stars), len(l0))
-            array of spectra, one per input star
-            Spectrum in ergs/s/AA or ergs/s/AA/Lsun
+        values: sequence
+            value to interpolate
         """
+        _values = np.atleast_1d(getattr(self, values, values))
+
         null_value = kwargs.pop('null', np.nan)
+        dlogT = kwargs.pop('dlogT', self._dlogT)
+        dlogg = kwargs.pop('dlogg', self._dlogg)
         ndata = len(stars)
         logT, logg, logL, Z = stars['logT'], stars['logg'], stars['logL'], stars['Z']
 
@@ -220,7 +239,60 @@ class Stellib(object):
 
         # check boundary conditions, keep the data but do not compute the sed
         # if outside
-        bound = self.points_inside(np.array([logT, logg]).T)
+        bound = self.points_inside(np.array([logT, logg]).T, 
+                dlogT=dlogT, dlogg=dlogg)
+        if np.ndim(_values) == 1:
+            specs = np.empty(ndata, dtype=float)
+        else:
+            specs = np.empty((ndata, _values.shape[1]), dtype=float)
+
+        specs[~bound] = null_value
+        logZ = np.log10(Z)
+        aps = np.array([logT, logg, logZ]).T
+        s = self.interpolator.interp_other(aps[bound], _values) * weights[bound]
+        specs[bound] = np.squeeze(s)
+
+        return specs
+
+    def generate_individual_spectra(self, stars, **kwargs):
+        """ Generates individual spectra for the given stars and stellar library
+
+        Returns NaN spectra if the boundary conditions are not met (no extrapolation)
+
+        Parameters
+        ----------
+        stars: Table
+            contains at least (logT, logg, logL, Z) of the considered stars
+
+        dlogT: float
+            margin in logT
+
+        dlogg: float
+            margin in logg
+
+        returns
+        -------
+        l0: ndarray, ndim=1
+            wavelength definition of the spectra
+            wavelength in AA
+
+        s0: ndarray, shape=(len(stars), len(l0))
+            array of spectra, one per input star
+            Spectrum in ergs/s/AA or lsun/AA
+        """
+        null_value = kwargs.pop('null', np.nan)
+        dlogT = kwargs.pop('dlogT', self._dlogT)
+        dlogg = kwargs.pop('dlogg', self._dlogg)
+        ndata = len(stars)
+        logT, logg, logL, Z = stars['logT'], stars['logg'], stars['logL'], stars['Z']
+
+        # weights to apply during the interpolation (note that radii must be in cm)
+        weights = self.get_weights(logT, logg, logL)
+
+        # check boundary conditions, keep the data but do not compute the sed
+        # if outside
+        bound = self.points_inside(np.array([logT, logg]).T, 
+                dlogT=dlogT, dlogg=dlogg)
         specs = np.empty((ndata, len(self._wavelength)), dtype=float)
         specs[~bound] = np.full(len(self.wavelength), null_value)
 
@@ -234,7 +306,7 @@ class Stellib(object):
 
         return l0, specs
 
-    def points_inside(self, xypoints, dlogT=0.1, dlogg=0.3):
+    def points_inside(self, xypoints, dlogT=0.1, dlogg=0.5):
         """
         Returns if a point is inside the polygon defined by the boundary of the library
 
@@ -348,7 +420,18 @@ class AtmosphereLib(Stellib):
     of the input libraries.
     """
     def get_weights(self, logT, logg, logL, weights=None):
-        """ Returns the proper weights for the interpolation """
+        """ Returns the proper weights for the interpolation 
+        Stellar atmospheres are normalized to Radius = 1
+
+        Parameters
+        ----------
+        logT: float or ndarray
+            log-temperatures log(T/K)
+        logg: float or ndarray
+            log-gravity  log(g)
+        logL: float or ndarray
+            bolometric luminosity (log (L/Lsun))
+        """
         # weights to apply during the interpolation (note that radii must be in cm)
         # Stellar library models are given in cm^-2  ( 4 pi R)
         # Compute radii of each point using log(T) and log(L)
@@ -364,8 +447,8 @@ class CompositeStellib(Stellib):
     """ Generates an object from the union of multiple individual libraries """
     def __init__(self, osllist, *args, **kwargs):
         self._olist = osllist
-        self._dlogT = 0.1
-        self._dlogg = 1.0
+        self._dlogT = 0.5
+        self._dlogg = 0.5
 
     @property
     def name(self):
@@ -376,6 +459,8 @@ class CompositeStellib(Stellib):
             self._dlogT = dlogT
         if dlogg is not None:
             self._dlogg = dlogg
+        for oslk in self._olist:
+            oslk.set_default_extrapolation_bounds(dlogT, dlogg)
 
     def __add__(self, other):
         """ Adding a library after """
@@ -398,10 +483,10 @@ class CompositeStellib(Stellib):
         """ return a common wavelength sampling to all libraries. This can be
         used to reinterpolate any spectrum onto a common definition """
         # check units
-        has_units = [hasUnit(osl) for osl in self._olist]
+        has_units = [hasUnit(osl.wavelength) for osl in self._olist]
         test = sum(has_units)
         if (test == 0):
-            return np.unique(np.asarray([ osl.wavelength for osl in self._olist ]))
+            return np.unique(np.asarray([ osl._wavelength for osl in self._olist ]))
 
         # which library sets the units
         common_unit = self._olist[0].wavelength_unit
@@ -419,6 +504,10 @@ class CompositeStellib(Stellib):
         for osl in self._olist:
             wave.append(osl.wavelength.to(common_unit).magnitude)
         return np.unique(np.array(wave)) * unit[common_unit]
+
+    @property
+    def _wavelength(self):
+        return _drop_units(self.wavelength)
 
     @property
     def source(self):
@@ -443,6 +532,10 @@ class CompositeStellib(Stellib):
     @property
     def logZ(self):
         return np.hstack([osl.logZ for osl in self._olist])
+
+    @property
+    def flux_units(self):
+        return self._olist[0].flux_units
 
     def which_osl(self, xypoints, **kwargs):
         """
@@ -653,10 +746,11 @@ class CompositeStellib(Stellib):
             wave = wave.to(l0.unit)
         except:
             wave = _drop_units(wave)
-        f = np.interp(_drop_units(wave), _drop_units(l0), _drop_units(specs), **kwargs)
+        func = interp1d(_drop_units(l0), _drop_units(specs), **kwargs)
+        f = func(_drop_units(wave))
         return f
 
-    def generate_individual_spectra(self, stars, nthreads=0, **kwargs):
+    def generate_individual_spectra(self, stars, **kwargs):
         """ Generates individual spectra for the given stars and stellar library
 
         Returns NaN spectra if the boundary conditions are not met (no extrapolation)
@@ -687,15 +781,83 @@ class CompositeStellib(Stellib):
 
         ndata = len(stars)
         logT, logg, logL, Z = stars['logT'], stars['logg'], stars['logL'], stars['Z']
+
+        # find which library per star
         osl_index = self.which_osl(list(zip(logT, logg)), dlogT=dlogT, dlogg=dlogg)
 
+        # group calculations per library
+        groups = [(osl_i, [k[0] for k in grp]) 
+                  for osl_i, grp in groupby(enumerate(osl_index), lambda x:x[1])]
+
         # Do the actual interpolation, avoiding exptrapolations
-        specs = np.empty( (ndata, len(self.wavelength)), dtype=float )
-        func = Partial(self.generate_stellar_spectrum,
-                       raise_extrapolation=False, null=null_value)
-        specs = ezmap.map(func, zip(logT, logg, logL, Z), ncpu=nthreads, **kwargs)
+        spectra = np.empty( (ndata, len(self.wavelength)), dtype=float )
+
+        for osl_i, idx_group in groups:
+            ind = np.array(idx_group)
+            if osl_i > 0:
+                _osl = self._olist[osl_i - 1]
+                lambdas, specs = _osl.generate_individual_spectra(stars[ind])
+                spectra[ind] = self.reinterpolate_spectra(
+                        _drop_units(lambdas), 
+                        _drop_units(specs),
+                        bounds_error=False,
+                        fill_value=0.,
+                        **kwargs
+                        )
+            else:
+                spectra[ind] = null_value
 
         l0 = self.wavelength
-        specs = specs * self.flux_units
+        spectra = spectra * self.flux_units
 
-        return l0, specs, osl_index
+        return l0, spectra, osl_index
+
+    def generate_individual_values(self, stars, values, **kwargs):
+        """ Generates individual spectra for the given stars and stellar library
+
+        Returns NaN spectra if the boundary conditions are not met (no extrapolation)
+
+        Parameters
+        ----------
+        stars: Table
+            contains at least (logT, logg, logL, Z) of the considered stars
+
+        values: sequence or attribute name
+            value to interpolate
+
+        returns
+        -------
+        values: sequence
+            value to interpolate
+        """
+        null_value = kwargs.pop('null', np.nan)
+        try:
+            bounds = kwargs.pop('bounds', None)
+            dlogT = bounds.get('dlogT', self._dlogT)
+            dlogg = bounds.get('dlogg', self._dlogg)
+        except:
+            dlogT = None
+            dlogg = None
+
+        ndata = len(stars)
+        logT, logg, logL, Z = stars['logT'], stars['logg'], stars['logL'], stars['Z']
+
+        # find which library per star
+        osl_index = self.which_osl(list(zip(logT, logg)), dlogT=dlogT, dlogg=dlogg)
+
+        # group calculations per library
+        groups = [(osl_i, [k[0] for k in grp]) 
+                  for osl_i, grp in groupby(enumerate(osl_index), lambda x:x[1])]
+
+        # Do the actual interpolation, avoiding exptrapolations
+        spectra = np.empty(ndata, dtype=float )
+
+        for osl_i, idx_group in groups:
+            ind = np.array(idx_group)
+            if osl_i > 0:
+                _osl = self._olist[osl_i - 1]
+                spectra[ind] = _osl.generate_individual_values(stars[ind], values, **kwargs)
+            else:
+                spectra[ind] = null_value
+
+        return spectra, osl_index
