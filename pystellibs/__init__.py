@@ -7,5 +7,6 @@ from .tlusty import Tlusty
 from .kurucz import Kurucz
 from .munari import Munari
 from .btsettl import BTSettl
+from .marcs import Marcs
 from .simpletable import SimpleTable
 from .ezunits import unit
