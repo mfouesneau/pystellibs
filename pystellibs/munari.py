@@ -23,7 +23,7 @@ class Munari(AtmosphereLib):
     """
     def __init__(self, *args, **kwargs):
         self.name = 'Munari'
-        self.source = libsdir + '/libs/atlas9-munari.hires.grid.fits'
+        self.source = libsdir + '/atlas9-munari.hires.grid.fits'
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
 
