@@ -6,16 +6,18 @@ setup_mpl.theme()
 setup_mpl.solarized_colors()
 
 lib = pystellibs.BaSeL() + pystellibs.Rauch()
+# lib = pystellibs.BTSettl() + pystellibs.BaSeL() + pystellibs.Munari() + pystellibs.Rauch()
 
 for osl in lib._olist:
     l = plt.plot(osl.logT, osl.logg, 'o')[0]
     osl.plot_boundary(color=l.get_color(), dlogT=0.1, dlogg=0.3, alpha=0.3,
                       label=osl.name)
+    # l.set_visible(False)
 
 plt.xlim(5.6, 2.8)
 plt.ylim(8.5, -2)
 figrc.hide_axis('top right'.split())
-plt.xlabel('log T$_{eff}$')
+plt.xlabel(r'log T$_{\rm eff}$')
 plt.ylabel('log g')
 plt.tight_layout()
 
