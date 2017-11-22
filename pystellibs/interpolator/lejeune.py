@@ -525,7 +525,7 @@ class LejeuneInterpolator(BaseInterpolator):
         
     def interp_other(self, aps, other, weights=None, **kwargs):
         # get osl data
-        osl_logT, osl_logg, osl_logZ = self.osl.get_interpolation_data().T
+        osl_logT, osl_logg, osl_logZ = self.osl.get_interpolation_data().T[:3]
         grid_logZ   = np.unique(osl_logZ)
         if np.ndim(other) < 2:
             values = np.atleast_2d([other]).T
@@ -648,7 +648,7 @@ class LejeuneInterpolator(BaseInterpolator):
         """
         # interpolation must be by construction from logT, logg, Z
         # logZ could be an alternative.
-        osl_logT, osl_logg, osl_logZ = self.osl.get_interpolation_data().T
+        osl_logT, osl_logg, osl_logZ = self.osl.get_interpolation_data().T[:3]
         _Z    = 10 ** osl_logZ
         _Zv   = np.unique(_Z)
         _T    = np.asarray(osl_logT, dtype=np.double)
@@ -724,7 +724,7 @@ class LejeuneInterpolator(BaseInterpolator):
             
         node_weights = []
         for s, current_weight in zip(_aps, _weights):
-            logT, logg, logZ = s
+            logT, logg, logZ = s[:3]
             Z = 10 ** logZ
             current_nodes = np.array(self._osl_interp_weights(self.osl, logT, logg, Z, **kwargs)).T
             current_nodes[:, 1] *= current_weight
