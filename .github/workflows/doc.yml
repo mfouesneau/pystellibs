@@ -1,6 +1,19 @@
-name: webpage
+name: documentation
 
-on: [push, pull_request]
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  # Also trigger on page_build, as well as release created events
+  page_build:
+  release:
+    types: # This configuration does not affect the page_build event above
+      - created
 
 jobs:
   build:
@@ -8,45 +21,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
-        persist-credentials: false
-        fetch-depth: 0
-
-    - name: Set up Python
-      uses: actions/setup-python@v2
+        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+    # - name: Setup tmate session   # Debugging
+    #   uses: mxschmitt/action-tmate@v3
+    - uses: ammaraskar/sphinx-action@master
       with:
-        python-version: "3.9"
-
-
-    - name: Install docs dependencies
-      run: |
-        pip install --upgrade pip
-        pip install "."
-
-    - name: Build docs
-      working-directory: ./docs
-      run: |
-        make html
-
-    - name: commit logs
-      working-directory: ./docs
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add log.ipynb
-        git add _build/html/*
-        git commit -m "updated documentation" -a || true
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        force: true
-
-
-
+        pre-build-command: |
+            python -m pip install -r requirements.txt
+            python -m pip install -r docs/requirements.txt
+            rm -f pystellibs.*rst
+            # re-generate API documentation
+            make apidoc
+        docs-folder: "docs/"
     # Publish built docs to gh-pages branch.
     # ===============================
     - name: Commit documentation changes
