@@ -707,7 +707,7 @@ class CompositeStellib(Stellib):
         specs = osl.generate_stellar_spectrum(logT, logg, logL, Z,
                                               raise_extrapolation,
                                               **kwargs)
-        specs = self.reinterpolate_spectra(osl.wavelength, specs, left=0., right=0.)
+        specs = self.reinterpolate_spectra(osl.wavelength, specs, fill_value=0., bounds_error=False)
         return specs
 
     def reinterpolate_spectra(self, l0, specs, **kwargs):
