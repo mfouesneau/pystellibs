@@ -1,0 +1,599 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pystellibs.helpers &#8212; pystellibs 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for pystellibs.helpers</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This is a first collection of tools making the design easier</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">wraps</span><span class="p">,</span> <span class="n">update_wrapper</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getargspec</span><span class="p">,</span> <span class="n">ismethod</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="kn">from</span> <span class="nn">.ezunits</span> <span class="kn">import</span> <span class="n">unit</span><span class="p">,</span> <span class="n">hasUnit</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;NameSpace&#39;</span><span class="p">,</span> <span class="s1">&#39;Pipe&#39;</span><span class="p">,</span> <span class="s1">&#39;Pipeable&#39;</span><span class="p">,</span> <span class="s1">&#39;Pipegroup&#39;</span><span class="p">,</span> <span class="s1">&#39;chunks&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;deprecated&#39;</span><span class="p">,</span> <span class="s1">&#39;generator&#39;</span><span class="p">,</span> <span class="s1">&#39;isNestedInstance&#39;</span><span class="p">,</span> <span class="s1">&#39;keywords_first&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;kfpartial&#39;</span><span class="p">,</span> <span class="s1">&#39;merge_records&#39;</span><span class="p">,</span> <span class="s1">&#39;missing_units_warning&#39;</span><span class="p">,</span> <span class="s1">&#39;nbytes&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;path_of_module&#39;</span><span class="p">,</span> <span class="s1">&#39;pretty_size_print&#39;</span><span class="p">,</span> <span class="s1">&#39;type_checker&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;val_in_unit&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="NameSpace"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.NameSpace">[docs]</a><span class="k">class</span> <span class="nc">NameSpace</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dict subclass that exposes its items as attributes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="nb">dict</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__dir__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;_&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{s.__name__:s}</span><span class="s2">: </span><span class="si">{r:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&#39;</span><span class="si">{s.__name__:s}</span><span class="s2">&#39; has no attribute &#39;</span><span class="si">{name:s}</span><span class="s2">&#39;&quot;</span>
+            <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__delattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="generator"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.generator">[docs]</a><span class="k">def</span> <span class="nf">generator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; A dummy decorator that only make codes mode readable.</span>
+<span class="sd">    It allow to explicitly mark a function as generator (yielding values)</span>
+<span class="sd">    and does nothing more than calling the initial function</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">deco</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">deco</span></div>
+
+
+<div class="viewcode-block" id="deprecated"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.deprecated">[docs]</a><span class="k">def</span> <span class="nf">deprecated</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; A dummy decorator that warns against using a deprecated function &quot;&quot;&quot;</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">deco</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;Function </span><span class="si">{0:s}</span><span class="s1"> is deprecated. You should avoid its usage&#39;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">txt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">deco</span></div>
+
+
+<div class="viewcode-block" id="chunks"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.chunks">[docs]</a><span class="nd">@generator</span>
+<span class="k">def</span> <span class="nf">chunks</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Yield successive n-sized chunks from l.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    l: iterable</span>
+<span class="sd">        object to iter over</span>
+
+<span class="sd">    n: int</span>
+<span class="sd">        number of elements per slice</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    chunk: tuple</span>
+<span class="sd">        n values from l</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">chunk</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">chunk</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">StopIteration</span></div>
+
+
+<div class="viewcode-block" id="isNestedInstance"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.isNestedInstance">[docs]</a><span class="k">def</span> <span class="nf">isNestedInstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">cl</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Test for sub-classes types</span>
+<span class="sd">    I could not find a universal test</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj: object instance</span>
+<span class="sd">        object to test</span>
+
+<span class="sd">    cl: Class</span>
+<span class="sd">        top level class to test</span>
+
+<span class="sd">    returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r: bool</span>
+<span class="sd">        True if obj is indeed an instance or subclass instance of cl</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="p">[</span> <span class="n">cl</span> <span class="p">]</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">cl</span><span class="p">,</span> <span class="s1">&#39;__subclasses&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">cl</span><span class="o">.</span><span class="n">__subclasses</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s1">&#39;__subclasses&#39;</span><span class="p">):</span>
+                <span class="n">tree</span> <span class="o">+=</span> <span class="n">k</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tree</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="type_checker"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.type_checker">[docs]</a><span class="k">def</span> <span class="nf">type_checker</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Check a given type and raise a type error if not correct</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: str</span>
+<span class="sd">        name of the variable to show in the exception text</span>
+
+<span class="sd">    obj: object</span>
+<span class="sd">        object to check</span>
+
+<span class="sd">    tp: type</span>
+<span class="sd">        expected type of obj</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    :exc:TypeError:</span>
+<span class="sd">        raises a TypeError if object is not of the correct type of a subclass of it</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">isNestedInstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">tp</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;Expected &quot;</span><span class="si">{0:s}</span><span class="s1">&quot; of type </span><span class="si">{1:s}</span><span class="s1">, got </span><span class="si">{2:s}</span><span class="s1"> instead.&#39;</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">txt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">tp</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="Pipeable"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipeable">[docs]</a><span class="k">class</span> <span class="nc">Pipeable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Decorator overloading | operator (__ror__) such that you can pipe</span>
+<span class="sd">    functions where the first argument is the variable on the left side of the</span>
+<span class="sd">    | operator.</span>
+<span class="sd">    This decorator allows you to use the decorated function normally and uses</span>
+<span class="sd">    the provided values when using in pipes.</span>
+
+<span class="sd">    &gt;&gt;&gt; import pylab as plt</span>
+<span class="sd">    &gt;&gt;&gt; _p = Pipeable(plt.plot, color=&#39;red&#39;, linestyle=&#39;--&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; _p(range(10), &#39;o-&#39;)  #  works</span>
+<span class="sd">    &gt;&gt;&gt; range(10) | _p      #  will plot a red dashed line</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+    <span class="k">def</span> <span class="fm">__ror__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lhs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Pipe"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipe">[docs]</a><span class="k">class</span> <span class="nc">Pipe</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Decorator overloading | operator (__ror__) such that you can pipe</span>
+<span class="sd">    functions where the first argument is the variable on the left side of the</span>
+<span class="sd">    | operator.</span>
+<span class="sd">    The difference with Pipeable is that you cannot use decorated function</span>
+<span class="sd">    outside of pipes but you gain the possibility to update the calling</span>
+<span class="sd">    parameters</span>
+
+<span class="sd">    Used with keywords_first make this a powerful Task</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="n">update_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Pipe</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Pipegroup</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span> <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Pipe</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Pipegroup</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__ror__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Pipeable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;Pipe: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">())</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Pipegroup"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipegroup">[docs]</a><span class="k">class</span> <span class="nc">Pipegroup</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pipes</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pipes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pipegroup.seq_call"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipegroup.seq_call">[docs]</a>    <span class="k">def</span> <span class="nf">seq_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">r</span> <span class="o">=</span> <span class="n">pk</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span></div>
+
+<div class="viewcode-block" id="Pipegroup.append"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipegroup.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Pipe</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Pipegroup</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;multi&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Pipe</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">Pipegroup</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;sequential&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Pipegroup.multi_call"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.Pipegroup.multi_call">[docs]</a>    <span class="k">def</span> <span class="nf">multi_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="nb">iter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span> <span class="n">pk</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span> <span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;sequential&#39;</span><span class="p">,</span> <span class="s1">&#39;&amp;&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_call</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;multi&#39;</span><span class="p">,</span> <span class="s1">&#39;|&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_call</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span> <span class="fm">__ror__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="s1">&#39;Pipegroup: mode=</span><span class="si">{}</span><span class="s1">,</span><span class="se">\n\t</span><span class="s1"> | &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;sequential&#39;</span><span class="p">:</span>
+            <span class="n">txt</span> <span class="o">+=</span> <span class="s1">&#39; &amp; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span> <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">txt</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n\t</span><span class="s1"> | &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span> <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">txt</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;sequential&#39;</span><span class="p">:</span>
+            <span class="n">delim</span> <span class="o">=</span> <span class="s1">&#39; &amp; &#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">delim</span> <span class="o">=</span> <span class="s1">&#39; | &#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;(</span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">delim</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span> <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipes</span><span class="p">]))</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Pipe: &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="keywords_first"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.keywords_first">[docs]</a><span class="k">def</span> <span class="nf">keywords_first</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Decorator that enables to access any argument or keyword as a keyword &quot;&quot;&quot;</span>
+    <span class="c1"># http://code.activestate.com/recipes/577922/ (r2)</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">getargspec</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">args</span><span class="p">,</span> <span class="o">-</span><span class="n">ismethod</span><span class="p">(</span><span class="n">f</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+                    <span class="n">a</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">k</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="o">**</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="kfpartial"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.kfpartial">[docs]</a><span class="k">def</span> <span class="nf">kfpartial</span><span class="p">(</span><span class="n">fun</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Allows to create partial functions with arbitrary arguments/keywords &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">keywords_first</span><span class="p">(</span><span class="n">fun</span><span class="p">),</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">warning_on_one_line</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                        <span class="n">line</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot; </span><span class="si">{0:s}</span><span class="s2">:</span><span class="si">{1:d}</span><span class="s2"> </span><span class="si">{2:s}</span><span class="s2">:</span><span class="si">{3:s}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">lineno</span><span class="p">,</span>
+                                             <span class="n">category</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="missing_units_warning"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.missing_units_warning">[docs]</a><span class="k">def</span> <span class="nf">missing_units_warning</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultunit</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Warn if any unit is missing</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name: str</span>
+<span class="sd">        name of the variable</span>
+
+<span class="sd">    defaultunit: str</span>
+<span class="sd">        default unit definition</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    warning: warnings.warn</span>
+<span class="sd">        warn if units are assumed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">formatwarning</span> <span class="o">=</span> <span class="n">warning_on_one_line</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Variable </span><span class="si">{0:s}</span><span class="s1"> does not have explicit units. Assuming `</span><span class="si">{1:s}</span><span class="s1">`</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="c1"># stacklevel makes the correct code reference</span>
+    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">defaultunit</span><span class="p">),</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="val_in_unit"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.val_in_unit">[docs]</a><span class="k">def</span> <span class="nf">val_in_unit</span><span class="p">(</span><span class="n">varname</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">defaultunit</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; check units and convert to defaultunit or create the unit information</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    varname: str</span>
+<span class="sd">        name of the variable</span>
+
+<span class="sd">    value: value</span>
+<span class="sd">        value of the variable, which may be unitless</span>
+
+<span class="sd">    defaultunit: str</span>
+<span class="sd">        default units is unitless</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    quantity: ezunits.Quantity</span>
+<span class="sd">        value with units</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; r = 0.5</span>
+<span class="sd">    &gt;&gt;&gt; print(val_in_unit(&#39;r&#39;, r, &#39;degree&#39;))</span>
+<span class="sd">    # UserWarning: Variable r does not have explicit units. Assuming `degree`</span>
+<span class="sd">    &lt;Quantity(0.5, &#39;degree&#39;)&gt;</span>
+
+<span class="sd">    &gt;&gt;&gt; r = 0.5 * unit[&#39;degree&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; print(val_in_unit(&#39;r&#39;, r, &#39;degree&#39;))</span>
+<span class="sd">    &lt;Quantity(0.5, &#39;degree&#39;)&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">hasUnit</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="n">missing_units_warning</span><span class="p">(</span><span class="n">varname</span><span class="p">,</span> <span class="n">defaultunit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span> <span class="o">*</span> <span class="n">unit</span><span class="p">[</span><span class="n">defaultunit</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">defaultunit</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="merge_records"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.merge_records">[docs]</a><span class="k">def</span> <span class="nf">merge_records</span><span class="p">(</span><span class="n">lst</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; generates a stack of records even with slightly different but compatible</span>
+<span class="sd">    dtypes</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    lst: sequence of np.recarray</span>
+<span class="sd">        sequence of individual records</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    val: np.recarray</span>
+<span class="sd">        array of stacked records</span>
+<span class="sd">        Note if if lst is empty, returns an empty list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">rk</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rk</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">names</span> <span class="o">=</span> <span class="n">rk</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">names</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">rec</span><span class="o">.</span><span class="n">fromrecords</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="path_of_module"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.path_of_module">[docs]</a><span class="k">def</span> <span class="nf">path_of_module</span><span class="p">(</span><span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; returns the definition code path of a given module, object or function</span>
+<span class="sd">    If nothing is provided, the current frame will be query, i.e., the current</span>
+<span class="sd">    working directory of the calling function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mod: module, class, function</span>
+<span class="sd">        object to find the defintion</span>
+<span class="sd">        if None, inspect.currentframe is used</span>
+
+<span class="sd">    returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    path: str</span>
+<span class="sd">        path of the definition</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+    <span class="kn">import</span> <span class="nn">inspect</span>
+
+    <span class="k">if</span> <span class="n">mod</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">getfile</span><span class="p">(</span><span class="n">mod</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="pretty_size_print"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.pretty_size_print">[docs]</a><span class="k">def</span> <span class="nf">pretty_size_print</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Output number of bytes in a human readable format</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_bytes: int</span>
+<span class="sd">        number of bytes to convert</span>
+
+<span class="sd">    returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output: str</span>
+<span class="sd">        string representation of the size with appropriate unit scale</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">num_bytes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span>
+
+    <span class="n">KiB</span> <span class="o">=</span> <span class="mi">1024</span>
+    <span class="n">MiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">KiB</span>
+    <span class="n">GiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">MiB</span>
+    <span class="n">TiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">GiB</span>
+    <span class="n">PiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">TiB</span>
+    <span class="n">EiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">PiB</span>
+    <span class="n">ZiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">EiB</span>
+    <span class="n">YiB</span> <span class="o">=</span> <span class="n">KiB</span> <span class="o">*</span> <span class="n">ZiB</span>
+
+    <span class="k">if</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">YiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> YB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">YiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">ZiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> ZB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">ZiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">EiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> EB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">EiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">PiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> PB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">PiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">TiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> TB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">TiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">GiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> GB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">GiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">MiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> MB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">MiB</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">num_bytes</span> <span class="o">&gt;</span> <span class="n">KiB</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> KB&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span> <span class="o">/</span> <span class="n">KiB</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%.3g</span><span class="s1"> Bytes&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num_bytes</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">output</span></div>
+
+
+<div class="viewcode-block" id="nbytes"><a class="viewcode-back" href="../../pystellibs.html#pystellibs.helpers.nbytes">[docs]</a><span class="k">def</span> <span class="nf">nbytes</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">pprint</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; return the number of bytes of the object, which includes size of nested</span>
+<span class="sd">    structures</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj: object</span>
+<span class="sd">        object to find the size of</span>
+
+<span class="sd">    pprint: bool, optional (default=False)</span>
+<span class="sd">        if set, returns the result after calling pretty_size_print</span>
+
+<span class="sd">    returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    num_bytes: int or str</span>
+<span class="sd">        total number of bytes or human readable corresponding string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">num_bytes</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">nbytes</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="s1">&#39;nbytes&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">pprint</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pretty_size_print</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">num_bytes</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">pystellibs</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=mfouesneau&repo=pystellibs&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">pystellibs</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, M. Fouesneau.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+    <a href="https://github.com/mfouesneau/pystellibs" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,438 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pystellibs &#8212; pystellibs 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pystellibs package" href="pystellibs.html" />
+    <link rel="prev" title="pystellibs - making synthetic spectra" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pystellibs">
+<h1>pystellibs<a class="headerlink" href="#pystellibs" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pystellibs.html">pystellibs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.ezunits.html">pystellibs.ezunits package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.ezunits.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.ezunits.html#module-pystellibs.ezunits.pint">pystellibs.ezunits.pint module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.ezunits.html#module-pystellibs.ezunits">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.future.html">pystellibs.future package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.future.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.future.html#module-pystellibs.future.path">pystellibs.future.path module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.future.html#module-pystellibs.future">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.interpolator.html">pystellibs.interpolator package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.interpolator.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.interpolator.html#module-pystellibs.interpolator.interpolator">pystellibs.interpolator.interpolator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.interpolator.html#module-pystellibs.interpolator.lejeune">pystellibs.interpolator.lejeune module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.interpolator.html#module-pystellibs.interpolator.ndlinear">pystellibs.interpolator.ndlinear module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.interpolator.html#module-pystellibs.interpolator">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.basel">pystellibs.basel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL"><code class="docutils literal notranslate"><span class="pre">BaSeL</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.NHI"><code class="docutils literal notranslate"><span class="pre">BaSeL.NHI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.NHeI"><code class="docutils literal notranslate"><span class="pre">BaSeL.NHeI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.NHeII"><code class="docutils literal notranslate"><span class="pre">BaSeL.NHeII</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.Teff"><code class="docutils literal notranslate"><span class="pre">BaSeL.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.Z"><code class="docutils literal notranslate"><span class="pre">BaSeL.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.bbox"><code class="docutils literal notranslate"><span class="pre">BaSeL.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.logT"><code class="docutils literal notranslate"><span class="pre">BaSeL.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.logZ"><code class="docutils literal notranslate"><span class="pre">BaSeL.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.basel.BaSeL.logg"><code class="docutils literal notranslate"><span class="pre">BaSeL.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.btsettl">pystellibs.btsettl module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl"><code class="docutils literal notranslate"><span class="pre">BTSettl</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.Teff"><code class="docutils literal notranslate"><span class="pre">BTSettl.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.Z"><code class="docutils literal notranslate"><span class="pre">BTSettl.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.bbox"><code class="docutils literal notranslate"><span class="pre">BTSettl.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.get_interpolation_data"><code class="docutils literal notranslate"><span class="pre">BTSettl.get_interpolation_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.logT"><code class="docutils literal notranslate"><span class="pre">BTSettl.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.logZ"><code class="docutils literal notranslate"><span class="pre">BTSettl.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.btsettl.BTSettl.logg"><code class="docutils literal notranslate"><span class="pre">BTSettl.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.config">pystellibs.config module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.elodie">pystellibs.elodie module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie"><code class="docutils literal notranslate"><span class="pre">Elodie</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.NHI"><code class="docutils literal notranslate"><span class="pre">Elodie.NHI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.NHeI"><code class="docutils literal notranslate"><span class="pre">Elodie.NHeI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.NHeII"><code class="docutils literal notranslate"><span class="pre">Elodie.NHeII</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.Teff"><code class="docutils literal notranslate"><span class="pre">Elodie.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.Z"><code class="docutils literal notranslate"><span class="pre">Elodie.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.bbox"><code class="docutils literal notranslate"><span class="pre">Elodie.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.logT"><code class="docutils literal notranslate"><span class="pre">Elodie.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.logZ"><code class="docutils literal notranslate"><span class="pre">Elodie.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.elodie.Elodie.logg"><code class="docutils literal notranslate"><span class="pre">Elodie.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#pystellibs-ezmap-module">pystellibs.ezmap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.helpers">pystellibs.helpers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.NameSpace"><code class="docutils literal notranslate"><span class="pre">NameSpace</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipe"><code class="docutils literal notranslate"><span class="pre">Pipe</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipeable"><code class="docutils literal notranslate"><span class="pre">Pipeable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipegroup"><code class="docutils literal notranslate"><span class="pre">Pipegroup</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipegroup.append"><code class="docutils literal notranslate"><span class="pre">Pipegroup.append()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipegroup.multi_call"><code class="docutils literal notranslate"><span class="pre">Pipegroup.multi_call()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.Pipegroup.seq_call"><code class="docutils literal notranslate"><span class="pre">Pipegroup.seq_call()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.chunks"><code class="docutils literal notranslate"><span class="pre">chunks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.deprecated"><code class="docutils literal notranslate"><span class="pre">deprecated()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.generator"><code class="docutils literal notranslate"><span class="pre">generator()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.isNestedInstance"><code class="docutils literal notranslate"><span class="pre">isNestedInstance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.keywords_first"><code class="docutils literal notranslate"><span class="pre">keywords_first()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.kfpartial"><code class="docutils literal notranslate"><span class="pre">kfpartial()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.merge_records"><code class="docutils literal notranslate"><span class="pre">merge_records()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.missing_units_warning"><code class="docutils literal notranslate"><span class="pre">missing_units_warning()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.nbytes"><code class="docutils literal notranslate"><span class="pre">nbytes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.path_of_module"><code class="docutils literal notranslate"><span class="pre">path_of_module()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.pretty_size_print"><code class="docutils literal notranslate"><span class="pre">pretty_size_print()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.type_checker"><code class="docutils literal notranslate"><span class="pre">type_checker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.helpers.val_in_unit"><code class="docutils literal notranslate"><span class="pre">val_in_unit()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.kurucz">pystellibs.kurucz module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz"><code class="docutils literal notranslate"><span class="pre">Kurucz</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.Teff"><code class="docutils literal notranslate"><span class="pre">Kurucz.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.Z"><code class="docutils literal notranslate"><span class="pre">Kurucz.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.bbox"><code class="docutils literal notranslate"><span class="pre">Kurucz.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.logT"><code class="docutils literal notranslate"><span class="pre">Kurucz.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.logZ"><code class="docutils literal notranslate"><span class="pre">Kurucz.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.kurucz.Kurucz.logg"><code class="docutils literal notranslate"><span class="pre">Kurucz.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.marcs">pystellibs.marcs module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs"><code class="docutils literal notranslate"><span class="pre">Marcs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.Teff"><code class="docutils literal notranslate"><span class="pre">Marcs.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.Z"><code class="docutils literal notranslate"><span class="pre">Marcs.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.alpha"><code class="docutils literal notranslate"><span class="pre">Marcs.alpha</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.bbox"><code class="docutils literal notranslate"><span class="pre">Marcs.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.generate_individual_spectra"><code class="docutils literal notranslate"><span class="pre">Marcs.generate_individual_spectra()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.generate_stellar_spectrum"><code class="docutils literal notranslate"><span class="pre">Marcs.generate_stellar_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.get_interpolation_data"><code class="docutils literal notranslate"><span class="pre">Marcs.get_interpolation_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.logT"><code class="docutils literal notranslate"><span class="pre">Marcs.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.logZ"><code class="docutils literal notranslate"><span class="pre">Marcs.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.marcs.Marcs.logg"><code class="docutils literal notranslate"><span class="pre">Marcs.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.munari">pystellibs.munari module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari"><code class="docutils literal notranslate"><span class="pre">Munari</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.Teff"><code class="docutils literal notranslate"><span class="pre">Munari.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.Z"><code class="docutils literal notranslate"><span class="pre">Munari.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.bbox"><code class="docutils literal notranslate"><span class="pre">Munari.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.get_interpolation_data"><code class="docutils literal notranslate"><span class="pre">Munari.get_interpolation_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.logT"><code class="docutils literal notranslate"><span class="pre">Munari.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.logZ"><code class="docutils literal notranslate"><span class="pre">Munari.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.munari.Munari.logg"><code class="docutils literal notranslate"><span class="pre">Munari.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.pbar">pystellibs.pbar module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#simple-progressbar">Simple progressbar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar"><code class="docutils literal notranslate"><span class="pre">Pbar</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.build_str_meter"><code class="docutils literal notranslate"><span class="pre">Pbar.build_str_meter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.decorator"><code class="docutils literal notranslate"><span class="pre">Pbar.decorator()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.format_interval"><code class="docutils literal notranslate"><span class="pre">Pbar.format_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.handle_resize"><code class="docutils literal notranslate"><span class="pre">Pbar.handle_resize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.iterover"><code class="docutils literal notranslate"><span class="pre">Pbar.iterover()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.print_status"><code class="docutils literal notranslate"><span class="pre">Pbar.print_status()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.pbar.Pbar.update"><code class="docutils literal notranslate"><span class="pre">Pbar.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.rauch">pystellibs.rauch module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch"><code class="docutils literal notranslate"><span class="pre">Rauch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.NHI"><code class="docutils literal notranslate"><span class="pre">Rauch.NHI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.NHeI"><code class="docutils literal notranslate"><span class="pre">Rauch.NHeI</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.NHeII"><code class="docutils literal notranslate"><span class="pre">Rauch.NHeII</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.Teff"><code class="docutils literal notranslate"><span class="pre">Rauch.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.Z"><code class="docutils literal notranslate"><span class="pre">Rauch.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.bbox"><code class="docutils literal notranslate"><span class="pre">Rauch.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.logT"><code class="docutils literal notranslate"><span class="pre">Rauch.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.logZ"><code class="docutils literal notranslate"><span class="pre">Rauch.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.rauch.Rauch.logg"><code class="docutils literal notranslate"><span class="pre">Rauch.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.simpletable">pystellibs.simpletable module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#requirements">Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers"><code class="docutils literal notranslate"><span class="pre">AstroHelpers</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.conesearch"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.conesearch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.deg2dms"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.deg2dms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.deg2hms"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.deg2hms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.dms2deg"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.dms2deg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.euler"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.euler()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.hms2deg"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.hms2deg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroHelpers.sphdist"><code class="docutils literal notranslate"><span class="pre">AstroHelpers.sphdist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable"><code class="docutils literal notranslate"><span class="pre">AstroTable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.coneSearch"><code class="docutils literal notranslate"><span class="pre">AstroTable.coneSearch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.get_DEC"><code class="docutils literal notranslate"><span class="pre">AstroTable.get_DEC()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.get_RA"><code class="docutils literal notranslate"><span class="pre">AstroTable.get_RA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.info"><code class="docutils literal notranslate"><span class="pre">AstroTable.info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.selectWhere"><code class="docutils literal notranslate"><span class="pre">AstroTable.selectWhere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.set_DEC"><code class="docutils literal notranslate"><span class="pre">AstroTable.set_DEC()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.set_RA"><code class="docutils literal notranslate"><span class="pre">AstroTable.set_RA()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.where"><code class="docutils literal notranslate"><span class="pre">AstroTable.where()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.AstroTable.zoneSearch"><code class="docutils literal notranslate"><span class="pre">AstroTable.zoneSearch()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable"><code class="docutils literal notranslate"><span class="pre">SimpleTable</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.addCol"><code class="docutils literal notranslate"><span class="pre">SimpleTable.addCol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.addLine"><code class="docutils literal notranslate"><span class="pre">SimpleTable.addLine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.add_column"><code class="docutils literal notranslate"><span class="pre">SimpleTable.add_column()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.append_row"><code class="docutils literal notranslate"><span class="pre">SimpleTable.append_row()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.boxplot"><code class="docutils literal notranslate"><span class="pre">SimpleTable.boxplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.colnames"><code class="docutils literal notranslate"><span class="pre">SimpleTable.colnames</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.delCol"><code class="docutils literal notranslate"><span class="pre">SimpleTable.delCol()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.dtype"><code class="docutils literal notranslate"><span class="pre">SimpleTable.dtype</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.empty_row"><code class="docutils literal notranslate"><span class="pre">SimpleTable.empty_row</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.evalexpr"><code class="docutils literal notranslate"><span class="pre">SimpleTable.evalexpr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.find_duplicate"><code class="docutils literal notranslate"><span class="pre">SimpleTable.find_duplicate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.get"><code class="docutils literal notranslate"><span class="pre">SimpleTable.get()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.groupby"><code class="docutils literal notranslate"><span class="pre">SimpleTable.groupby()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.hexbin"><code class="docutils literal notranslate"><span class="pre">SimpleTable.hexbin()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.hist"><code class="docutils literal notranslate"><span class="pre">SimpleTable.hist()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.hist2d"><code class="docutils literal notranslate"><span class="pre">SimpleTable.hist2d()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.info"><code class="docutils literal notranslate"><span class="pre">SimpleTable.info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.iterkeys"><code class="docutils literal notranslate"><span class="pre">SimpleTable.iterkeys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.itervalues"><code class="docutils literal notranslate"><span class="pre">SimpleTable.itervalues()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.join_by"><code class="docutils literal notranslate"><span class="pre">SimpleTable.join_by()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.keys"><code class="docutils literal notranslate"><span class="pre">SimpleTable.keys()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.match"><code class="docutils literal notranslate"><span class="pre">SimpleTable.match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.name"><code class="docutils literal notranslate"><span class="pre">SimpleTable.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.nbytes"><code class="docutils literal notranslate"><span class="pre">SimpleTable.nbytes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.ncols"><code class="docutils literal notranslate"><span class="pre">SimpleTable.ncols</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.nrows"><code class="docutils literal notranslate"><span class="pre">SimpleTable.nrows</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.plot"><code class="docutils literal notranslate"><span class="pre">SimpleTable.plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.plot_function"><code class="docutils literal notranslate"><span class="pre">SimpleTable.plot_function()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.pop_columns"><code class="docutils literal notranslate"><span class="pre">SimpleTable.pop_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.pprint"><code class="docutils literal notranslate"><span class="pre">SimpleTable.pprint()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.pprint_entry"><code class="docutils literal notranslate"><span class="pre">SimpleTable.pprint_entry()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.remove_column"><code class="docutils literal notranslate"><span class="pre">SimpleTable.remove_column()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.remove_columns"><code class="docutils literal notranslate"><span class="pre">SimpleTable.remove_columns()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.resolve_alias"><code class="docutils literal notranslate"><span class="pre">SimpleTable.resolve_alias()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.reverse_alias"><code class="docutils literal notranslate"><span class="pre">SimpleTable.reverse_alias()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.scatter"><code class="docutils literal notranslate"><span class="pre">SimpleTable.scatter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.select"><code class="docutils literal notranslate"><span class="pre">SimpleTable.select()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.selectWhere"><code class="docutils literal notranslate"><span class="pre">SimpleTable.selectWhere()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.setComment"><code class="docutils literal notranslate"><span class="pre">SimpleTable.setComment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.setUnit"><code class="docutils literal notranslate"><span class="pre">SimpleTable.setUnit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.set_alias"><code class="docutils literal notranslate"><span class="pre">SimpleTable.set_alias()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.set_comment"><code class="docutils literal notranslate"><span class="pre">SimpleTable.set_comment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.set_unit"><code class="docutils literal notranslate"><span class="pre">SimpleTable.set_unit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.shape"><code class="docutils literal notranslate"><span class="pre">SimpleTable.shape</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.sort"><code class="docutils literal notranslate"><span class="pre">SimpleTable.sort()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.stack"><code class="docutils literal notranslate"><span class="pre">SimpleTable.stack()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.stats"><code class="docutils literal notranslate"><span class="pre">SimpleTable.stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.violinplot"><code class="docutils literal notranslate"><span class="pre">SimpleTable.violinplot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.where"><code class="docutils literal notranslate"><span class="pre">SimpleTable.where()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.SimpleTable.write"><code class="docutils literal notranslate"><span class="pre">SimpleTable.write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats"><code class="docutils literal notranslate"><span class="pre">stats</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.has_nan"><code class="docutils literal notranslate"><span class="pre">stats.has_nan()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.max"><code class="docutils literal notranslate"><span class="pre">stats.max()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.mean"><code class="docutils literal notranslate"><span class="pre">stats.mean()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.min"><code class="docutils literal notranslate"><span class="pre">stats.min()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.p16"><code class="docutils literal notranslate"><span class="pre">stats.p16()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.p50"><code class="docutils literal notranslate"><span class="pre">stats.p50()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.p84"><code class="docutils literal notranslate"><span class="pre">stats.p84()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.std"><code class="docutils literal notranslate"><span class="pre">stats.std()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.simpletable.stats.var"><code class="docutils literal notranslate"><span class="pre">stats.var()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.stellib">pystellibs.stellib module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.AtmosphereLib"><code class="docutils literal notranslate"><span class="pre">AtmosphereLib</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.AtmosphereLib.get_weights"><code class="docutils literal notranslate"><span class="pre">AtmosphereLib.get_weights()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib"><code class="docutils literal notranslate"><span class="pre">CompositeStellib</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.Teff"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.Z"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.flux_units"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.flux_units</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.generate_individual_spectra"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.generate_individual_spectra()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.generate_individual_values"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.generate_individual_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.generate_stellar_spectrum"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.generate_stellar_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.get_boundaries"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.get_boundaries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.logT"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.logZ"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.logg"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.logg</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.name"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.reinterpolate_spectra"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.reinterpolate_spectra()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.set_default_extrapolation_bounds"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.set_default_extrapolation_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.source"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.wavelength"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.wavelength</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.CompositeStellib.which_osl"><code class="docutils literal notranslate"><span class="pre">CompositeStellib.which_osl()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib"><code class="docutils literal notranslate"><span class="pre">Stellib</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.flux_units"><code class="docutils literal notranslate"><span class="pre">Stellib.flux_units</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.generate_individual_spectra"><code class="docutils literal notranslate"><span class="pre">Stellib.generate_individual_spectra()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.generate_individual_values"><code class="docutils literal notranslate"><span class="pre">Stellib.generate_individual_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.generate_stellar_spectrum"><code class="docutils literal notranslate"><span class="pre">Stellib.generate_stellar_spectrum()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.get_boundaries"><code class="docutils literal notranslate"><span class="pre">Stellib.get_boundaries()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.get_interpolation_data"><code class="docutils literal notranslate"><span class="pre">Stellib.get_interpolation_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.get_radius"><code class="docutils literal notranslate"><span class="pre">Stellib.get_radius()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.get_weights"><code class="docutils literal notranslate"><span class="pre">Stellib.get_weights()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.nbytes"><code class="docutils literal notranslate"><span class="pre">Stellib.nbytes</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.plot_boundary"><code class="docutils literal notranslate"><span class="pre">Stellib.plot_boundary()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.points_inside"><code class="docutils literal notranslate"><span class="pre">Stellib.points_inside()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.set_default_extrapolation_bounds"><code class="docutils literal notranslate"><span class="pre">Stellib.set_default_extrapolation_bounds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.stellib.Stellib.wavelength"><code class="docutils literal notranslate"><span class="pre">Stellib.wavelength</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs.tlusty">pystellibs.tlusty module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty"><code class="docutils literal notranslate"><span class="pre">Tlusty</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.Teff"><code class="docutils literal notranslate"><span class="pre">Tlusty.Teff</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.Z"><code class="docutils literal notranslate"><span class="pre">Tlusty.Z</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.bbox"><code class="docutils literal notranslate"><span class="pre">Tlusty.bbox()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.logT"><code class="docutils literal notranslate"><span class="pre">Tlusty.logT</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.logZ"><code class="docutils literal notranslate"><span class="pre">Tlusty.logZ</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pystellibs.html#pystellibs.tlusty.Tlusty.logg"><code class="docutils literal notranslate"><span class="pre">Tlusty.logg</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html#module-pystellibs">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pystellibs</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=mfouesneau&repo=pystellibs&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pystellibs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html">pystellibs package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">pystellibs - making synthetic spectra</a></li>
+      <li>Next: <a href="pystellibs.html" title="next chapter">pystellibs package</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, M. Fouesneau.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/mfouesneau/pystellibs" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
