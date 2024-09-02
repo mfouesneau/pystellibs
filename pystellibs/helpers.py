@@ -3,7 +3,7 @@ This is a first collection of tools making the design easier
 """
 import sys
 from functools import partial, wraps, update_wrapper
-try
+try:
     from inspect import getargspec
 except ImportError:  # Apparently since py3.11
     from inspect import getfullargspec as getargspec       
