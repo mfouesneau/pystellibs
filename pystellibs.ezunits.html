@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pystellibs.ezunits package &#8212; pystellibs 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pystellibs.future package" href="pystellibs.future.html" />
+    <link rel="prev" title="pystellibs package" href="pystellibs.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="pystellibs-ezunits-package">
+<h1>pystellibs.ezunits package<a class="headerlink" href="#pystellibs-ezunits-package" title="Permalink to this heading">¶</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
+</section>
+<section id="module-pystellibs.ezunits.pint">
+<span id="pystellibs-ezunits-pint-module"></span><h2>pystellibs.ezunits.pint module<a class="headerlink" href="#module-pystellibs.ezunits.pint" title="Permalink to this heading">¶</a></h2>
+<section id="pint">
+<h3>pint<a class="headerlink" href="#pint" title="Permalink to this heading">¶</a></h3>
+<p>Pint is Python module/package to define, operate and manipulate
+<strong>physical quantities</strong>: the product of a numerical value and a
+unit of measurement. It allows arithmetic operations between them
+and conversions from and to different units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2012 by Hernan E. Grecco.</p>
+</dd>
+<dt class="field-even">license<span class="colon">:</span></dt>
+<dd class="field-even"><p>BSD, see LICENSE for more details.</p>
+</dd>
+</dl>
+</section>
+<dl class="py class">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.AliasDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">AliasDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">)</span> <span class="pre">-&gt;</span> <span class="pre">new</span> <span class="pre">empty</span> <span class="pre">dictionary</span> <span class="pre">dict(mapping)</span> <span class="pre">-&gt;</span> <span class="pre">new</span> <span class="pre">dictionary</span> <span class="pre">initialized</span> <span class="pre">from</span> <span class="pre">a</span> <span class="pre">mapping</span> <span class="pre">object's</span> <span class="pre">(key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value)</span> <span class="pre">pairs</span> <span class="pre">dict(iterable)</span> <span class="pre">-&gt;</span> <span class="pre">new</span> <span class="pre">dictionary</span> <span class="pre">initialized</span> <span class="pre">as</span> <span class="pre">if</span> <span class="pre">via:</span> <span class="pre">d</span> <span class="pre">=</span> <span class="pre">{}</span> <span class="pre">for</span> <span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span> <span class="pre">in</span> <span class="pre">iterable:</span> <span class="pre">d[k]</span> <span class="pre">=</span> <span class="pre">v</span> <span class="pre">dict(**kwargs)</span> <span class="pre">-&gt;</span> <span class="pre">new</span> <span class="pre">dictionary</span> <span class="pre">initialized</span> <span class="pre">with</span> <span class="pre">the</span> <span class="pre">name=value</span> <span class="pre">pairs</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">keyword</span> <span class="pre">argument</span> <span class="pre">list.</span>&#160; <span class="pre">For</span> <span class="pre">example:</span>&#160; <span class="pre">dict(one=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">two=2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#AliasDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.AliasDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromkeys</span></code>(iterable[, value])</p></td>
+<td><p>Create a new dictionary with keys from iterable and values set to value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>(key[, default])</p></td>
+<td><p>Return the value for key if key is in the dictionary, else default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code>(k[,d])</p></td>
+<td><p>If key is not found, d is returned if given, otherwise KeyError is raised</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code>(/)</p></td>
+<td><p>Remove and return a (key, value) pair as a 2-tuple.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code>(key[, default])</p></td>
+<td><p>Insert key with a value of default if key is not in the dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>([E, ]**F)</p></td>
+<td><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k] If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v In either case, this is followed by: for k in F:  D[k] = F[k]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>add_alias</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_aliased</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.AliasDict.add_alias">
+<span class="sig-name descname"><span class="pre">add_alias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preferred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#AliasDict.add_alias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.AliasDict.add_alias" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.AliasDict.get_aliased">
+<span class="sig-name descname"><span class="pre">get_aliased</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#AliasDict.get_aliased"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.AliasDict.get_aliased" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.DimensionalityError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">DimensionalityError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">units1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">units2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#DimensionalityError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.DimensionalityError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Raised when trying to convert between incompatible units.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UndefinedUnitError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">UndefinedUnitError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unit_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UndefinedUnitError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UndefinedUnitError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Raised when the units are not defined in the unit registry.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitRegistry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">UnitRegistry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_ndarray</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitRegistry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitRegistry" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The unit registry stores the definitions and relationships between
+units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – path of the units definition file to load.
+Empty to load the default definition file.
+None to leave the UnitRegistry empty.</p></li>
+<li><p><strong>force_ndarray</strong> – convert any input, scalar or not to a numpy.ndarray.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pystellibs.ezunits.pint.UnitRegistry.add_from_file" title="pystellibs.ezunits.pint.UnitRegistry.add_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_from_file</span></code></a>(filename)</p></td>
+<td><p>Add units and prefixes defined in a definition text file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pystellibs.ezunits.pint.UnitRegistry.add_prefix" title="pystellibs.ezunits.pint.UnitRegistry.add_prefix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_prefix</span></code></a>(name, value[, aliases])</p></td>
+<td><p>Add prefix to the registry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pystellibs.ezunits.pint.UnitRegistry.add_unit" title="pystellibs.ezunits.pint.UnitRegistry.add_unit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_unit</span></code></a>(name, value[, aliases])</p></td>
+<td><p>Add unit to the registry.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pystellibs.ezunits.pint.UnitRegistry.get_alias" title="pystellibs.ezunits.pint.UnitRegistry.get_alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_alias</span></code></a>(name)</p></td>
+<td><p>Return the preferred alias for a unit</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitRegistry.add_from_file">
+<span class="sig-name descname"><span class="pre">add_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitRegistry.add_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitRegistry.add_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add units and prefixes defined in a definition text file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitRegistry.add_prefix">
+<span class="sig-name descname"><span class="pre">add_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitRegistry.add_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitRegistry.add_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add prefix to the registry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitRegistry.add_unit">
+<span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">modifiers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitRegistry.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitRegistry.add_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add unit to the registry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitRegistry.get_alias">
+<span class="sig-name descname"><span class="pre">get_alias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitRegistry.get_alias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitRegistry.get_alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the preferred alias for a unit</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitsContainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">UnitsContainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitsContainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitsContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>The UnitsContainer stores the product of units and their respective
+exponent and implements the corresponding operations</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fromkeys</span></code>(iterable[, value])</p></td>
+<td><p>Create a new dictionary with keys from iterable and values set to value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code>(key[, default])</p></td>
+<td><p>Return the value for key if key is in the dictionary, else default.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code>(k[,d])</p></td>
+<td><p>If key is not found, d is returned if given, otherwise KeyError is raised</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code>(/)</p></td>
+<td><p>Remove and return a (key, value) pair as a 2-tuple.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code>(key[, default])</p></td>
+<td><p>Insert key with a value of default if key is not in the dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code>([E, ]**F)</p></td>
+<td><p>If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k] If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v In either case, this is followed by: for k in F:  D[k] = F[k]</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><strong>add</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.UnitsContainer.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#UnitsContainer.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.UnitsContainer.add" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.converter_from_reference">
+<span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">converter_from_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_base</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#converter_from_reference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.converter_from_reference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pystellibs.ezunits.pint.converter_to_reference">
+<span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.pint.</span></span><span class="sig-name descname"><span class="pre">converter_to_reference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_base</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits/pint.html#converter_to_reference"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.pint.converter_to_reference" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pystellibs.ezunits">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pystellibs.ezunits" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>pint<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<p>Pint is Python module/package to define, operate and manipulate
+<strong>physical quantities</strong>: the product of a numerical value and a
+unit of measurement. It allows arithmetic operations between them
+and conversions from and to different units.</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright<span class="colon">:</span></dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2012 by Hernan E. Grecco.</p></li>
+</ol>
+</dd>
+<dt class="field-even">license<span class="colon">:</span></dt>
+<dd class="field-even"><p>BSD, see LICENSE for more details.</p>
+</dd>
+</dl>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="pystellibs.ezunits.hasUnit">
+<span class="sig-prename descclassname"><span class="pre">pystellibs.ezunits.</span></span><span class="sig-name descname"><span class="pre">hasUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pystellibs/ezunits.html#hasUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pystellibs.ezunits.hasUnit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">pystellibs</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=mfouesneau&repo=pystellibs&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pystellibs</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pystellibs.html">pystellibs package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">pystellibs</a><ul>
+  <li><a href="pystellibs.html">pystellibs package</a><ul>
+      <li>Previous: <a href="pystellibs.html" title="previous chapter">pystellibs package</a></li>
+      <li>Next: <a href="pystellibs.future.html" title="next chapter">pystellibs.future package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, M. Fouesneau.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/pystellibs.ezunits.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/mfouesneau/pystellibs" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
