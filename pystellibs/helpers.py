@@ -3,7 +3,11 @@ This is a first collection of tools making the design easier
 """
 import sys
 from functools import partial, wraps, update_wrapper
-from inspect import getargspec, ismethod
+try
+    from inspect import getargspec
+except ImportError:  # Apparently since py3.11
+    from inspect import getfullargspec as getargspec       
+from inspect import ismethod
 import warnings
 import numpy as np
 import itertools
