@@ -283,8 +283,8 @@ class Stellib(object):
         null_value = kwargs.pop('null', np.nan)
         dlogT = kwargs.pop('dlogT', self._dlogT)
         dlogg = kwargs.pop('dlogg', self._dlogg)
-        ndata = len(stars)
         logT, logg, logL, Z = stars['logT'], stars['logg'], stars['logL'], stars['Z']
+        ndata = len(logT)
 
         # weights to apply during the interpolation (note that radii must be in cm)
         weights = self.get_weights(logT, logg, logL)
