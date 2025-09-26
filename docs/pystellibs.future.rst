@@ -8,15 +8,14 @@ pystellibs.future.path module
 -----------------------------
 
 .. automodule:: pystellibs.future.path
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: pystellibs.future
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :show-inheritance:
+   :undoc-members:

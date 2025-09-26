@@ -8,31 +8,30 @@ pystellibs.interpolator.interpolator module
 -------------------------------------------
 
 .. automodule:: pystellibs.interpolator.interpolator
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 pystellibs.interpolator.lejeune module
 --------------------------------------
 
 .. automodule:: pystellibs.interpolator.lejeune
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 pystellibs.interpolator.ndlinear module
 ---------------------------------------
 
 .. automodule:: pystellibs.interpolator.ndlinear
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: pystellibs.interpolator
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :show-inheritance:
+   :undoc-members:
