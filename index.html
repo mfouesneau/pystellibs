@@ -1,19 +1,20 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to No Errors Test Project’s documentation! &#8212; No Errors Test Project  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>pystellibs - making synthetic spectra &#8212; pystellibs 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pystellibs" href="modules.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -30,19 +31,124 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-no-errors-test-project-s-documentation">
-<h1>Welcome to No Errors Test Project’s documentation!<a class="headerlink" href="#welcome-to-no-errors-test-project-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <section id="pystellibs-making-synthetic-spectra">
+<h1>pystellibs - making synthetic spectra<a class="headerlink" href="#pystellibs-making-synthetic-spectra" title="Permalink to this heading">¶</a></h1>
+<p>This is a set of tools to compute synthetic spectra in a simple way, ideal to
+integrate in larger projects.</p>
+<p>This package provides a common interface to compute a single or a collection of
+spectra using spectral libraries or atmospheres.</p>
+<section id="package-main-content">
+<h2>Package main content<a class="headerlink" href="#package-main-content" title="Permalink to this heading">¶</a></h2>
+<p>The main package articulates around 2 parts:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.stellib.Stellib</span></code> a stellar spectra library, commonly normalized to
+bolometric luminosities</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.stellib.AtmosphereLib</span></code> a stellar atmosphere library, commonly normalized to
+stellar radii.</p></li>
+</ul>
+<p>The interpolation within libraries is left as a separated component.</p>
+<p>This package provides already multiple input libraries:</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.basel.BaSeL</span></code>: BaSeL 2.2, ~ Atlas 9 empirically recalibrated (Leujeune et al 1998)</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.rauch.Rauch</span></code>: a White dwarf library</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.kurucz.Kurucz</span></code>: Castelli and Kurucz 2004 or ATLAS9</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.tlusty.Tlusty</span></code>: NLTE O, B stars [Lanz, T., &amp; Hubeny, I. (2003)]</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.elodie.Elodie</span></code>: version 3.1, high resolution optical library.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.munari.Munari</span></code>: extended ATLAS9 stellar atmospheres (Munari et al.  2005 A&amp;A 442 1127)</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pystellibs.btsettl.BTSettl</span></code>: BT-Settl Library (Allard, Hauschildt and Schweitzer 2000)</p></li>
+</ul>
+<p>Future libraries to be included:</p>
+<ul class="simple">
+<li><p>XSL: Xshooter spectral library</p></li>
+<li><p>PHOENIX</p></li>
+<li><p>MARCS</p></li>
+</ul>
+<section id="references-tbu">
+<h3>References (TBU)<a class="headerlink" href="#references-tbu" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Leujeune et al 1998: <a class="reference external" href="http://cdsads.u-strasbg.fr/abs/1998yCat..41300065L">http://cdsads.u-strasbg.fr/abs/1998yCat..41300065L</a></p></li>
+</ul>
+</section>
+</section>
+<section id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
+<p>The API has been reduced to minimum to make it easy to use. Mostly 2 functions:</p>
+<ul class="simple">
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">Stellib.generate_stellar_spectrum()</span></code>
+that computes one spectrum for one set of stellar parameters</p></li>
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">Stellib.generate_individual_spectra()</span></code>
+that computes a spectrum for each of many sets of paramaters</p></li>
+</ul>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pystellibs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pystellibs.html">pystellibs package</a></li>
+</ul>
+</li>
+</ul>
 </div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>This example shows how to use one of 2 libraries to compute a spectrum</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pystellibs</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaSeL</span><span class="p">,</span> <span class="n">Kurucz</span>
+
+<span class="c1"># load 2 libraries</span>
+<span class="n">basel</span> <span class="o">=</span> <span class="n">BaSeL</span><span class="p">()</span>
+<span class="n">kurucz</span> <span class="o">=</span> <span class="n">Kurucz</span><span class="p">()</span>
+<span class="n">ap</span> <span class="o">=</span> <span class="p">(</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">)</span>
+<span class="n">sb</span> <span class="o">=</span> <span class="n">basel</span><span class="o">.</span><span class="n">generate_stellar_spectrum</span><span class="p">(</span><span class="o">*</span><span class="n">ap</span><span class="p">)</span>
+<span class="n">sk</span> <span class="o">=</span> <span class="n">kurucz</span><span class="o">.</span><span class="n">generate_stellar_spectrum</span><span class="p">(</span><span class="o">*</span><span class="n">ap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">osl</span><span class="o">.</span><span class="n">_wavelength</span><span class="p">,</span> <span class="n">sb</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;BaSel&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">osl</span><span class="o">.</span><span class="n">_wavelength</span><span class="p">,</span> <span class="n">sk</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Kurucz&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Wavelength [</span><span class="si">{0}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">basel</span><span class="o">.</span><span class="n">wavelength_unit</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Flux [</span><span class="si">{0}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">basel</span><span class="o">.</span><span class="n">flux_units</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mf">5e4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1e25</span><span class="p">,</span> <span class="mf">5e30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/single_spec_libs.png"><img alt="_images/single_spec_libs.png" src="_images/single_spec_libs.png" style="width: 448.0px; height: 336.0px;" /></a>
+<ul class="simple">
+<li><p>Combining multiple libraries (with priority): the following example combines
+BaSeL with white-dwarf models.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pystellibs</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaSeL</span><span class="p">,</span> <span class="n">Rauch</span>
+
+<span class="c1"># Combine 2 libraries by priority order</span>
+<span class="n">lib</span> <span class="o">=</span> <span class="n">BaSeL</span><span class="p">()</span> <span class="o">+</span> <span class="n">Rauch</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">osl</span> <span class="ow">in</span> <span class="n">lib</span><span class="o">.</span><span class="n">_olist</span><span class="p">:</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">osl</span><span class="o">.</span><span class="n">logT</span><span class="p">,</span> <span class="n">osl</span><span class="o">.</span><span class="n">logg</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">osl</span><span class="o">.</span><span class="n">plot_boundary</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">l</span><span class="o">.</span><span class="n">get_color</span><span class="p">(),</span> <span class="n">dlogT</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">dlogg</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+                      <span class="n">label</span><span class="o">=</span><span class="n">osl</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">5.6</span><span class="p">,</span> <span class="mf">2.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">8.5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;log T$_</span><span class="si">{eff}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;log g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/combined_libs.png"><img alt="_images/combined_libs.png" src="_images/combined_libs.png" style="width: 448.0px; height: 336.0px;" /></a>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
-</div>
+</section>
 
 
           </div>
@@ -51,21 +157,32 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">No Errors Test Project</a></h1>
+<h1 class="logo"><a href="#">pystellibs</a></h1>
 
 
 
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=mfouesneau&repo=pystellibs&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
 
 
 
 
 
 <h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">pystellibs</a></li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="modules.html" title="next chapter">pystellibs</a></li>
   </ul></li>
 </ul>
 </div>
@@ -73,12 +190,12 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -92,10 +209,10 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2019, sphinx-action Test Suite.
+      &copy;2016, M. Fouesneau.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.2.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
@@ -103,6 +220,10 @@
           rel="nofollow">Page source</a>
     </div>
 
+    
+    <a href="https://github.com/mfouesneau/pystellibs" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
     
 
     
