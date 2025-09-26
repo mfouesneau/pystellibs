@@ -30,8 +30,8 @@ jobs:
     - uses: ammaraskar/sphinx-action@master
       with:
         pre-build-command: |
-            python -m pip install -r requirements.txt
-            python -m pip install -r docs/requirements.txt
+            python -m pip install .
+            python -m pip install ".[docs]"
             rm -f pystellibs.*rst
             # re-generate API documentation
             make apidoc
