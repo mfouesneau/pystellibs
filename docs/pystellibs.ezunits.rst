@@ -8,15 +8,14 @@ pystellibs.ezunits.pint module
 ------------------------------
 
 .. automodule:: pystellibs.ezunits.pint
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: pystellibs.ezunits
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :show-inheritance:
+   :undoc-members:

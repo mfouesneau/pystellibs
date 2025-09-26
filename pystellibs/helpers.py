@@ -353,7 +353,6 @@ def val_in_unit(varname, value, defaultunit):
         value with units
 
     Example
-    -------
     >>> r = 0.5
     >>> print(val_in_unit('r', r, 'degree'))
     # UserWarning: Variable r does not have explicit units. Assuming `degree`
