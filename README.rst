@@ -16,3 +16,9 @@ one set of models to another without pain (or combine sets together)
 This package handles **units** provided through a frozen version of `pint`
 included in this package.
 
+## Todolist
+
+- [ ] Add a function to download library files from the link, when missing.
+- [ ] Move to astropy units and remove pint dependency. (Astropy already needed)
+- [ ] See if removing simpletable dependency is possible (for pandas DataFrame with aliasing layer)
+- [ ] Documentation fix and improvement
