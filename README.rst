@@ -22,3 +22,8 @@ included in this package.
 - [ ] Move to astropy units and remove pint dependency. (Astropy already needed)
 - [ ] See if removing simpletable dependency is possible (for pandas DataFrame with aliasing layer)
 - [ ] Documentation fix and improvement
+- [ ] Remove `pystellibs.future` and use `matplotlib.path.Path` directly (recent versions of matplotlib)
+
+
+## Known issues
+- [ ] Inconsistency between astropy and ezunits/pint on Lsun

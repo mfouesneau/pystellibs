@@ -32,59 +32,47 @@ package.
     >>> s.write('newtable.fits')
     # export the initial subtable to a new file
 """
-from __future__ import (absolute_import, division, print_function)
+from __future__ import absolute_import, division, print_function
 
-__version__ = '3.0'
+__version__ = '4.0'
 __all__ = ['AstroHelpers', 'AstroTable', 'SimpleTable', 'stats']
 
 import sys
-import math
-from copy import deepcopy
-import re
+
+if (sys.version_info[0] < 3):
+    raise RuntimeError("Python 2 is no longer supported. Please use Python 3")
+
 import itertools
-from functools import wraps, partial
-import numpy as np
-from numpy import deg2rad, rad2deg, sin, cos, sqrt, arcsin, arctan2
-from numpy.lib import recfunctions
+import math
+import re
 import types
+from copy import deepcopy
+from functools import partial, wraps
+
+import numpy as np
+from numpy import arcsin, arctan2, cos, deg2rad, rad2deg, sin, sqrt
+from numpy.lib import recfunctions
 
 try:
-    from astropy.io import fits as pyfits
+    from astropy.io import fits as pyfits   # noqa
 except ImportError:
-    import pyfits
-except:
     pyfits = None
 
 try:
-    import tables
+    import tables  # noqa
 except ImportError:
     tables = None
 
 try:
-    import pandas as _pd
+    import pandas as _pd  # noqa
 except ImportError:
     _pd = None
 
-
-# ==============================================================================
-# Python 3 compatibility behavior
-# ==============================================================================
-# remap some python 2 built-ins on to py3k behavior or equivalent
-# Most of them become generators
 import operator
 
-PY3 = sys.version_info[0] > 2
-
-if PY3:
-    iteritems = operator.methodcaller('items')
-    itervalues = operator.methodcaller('values')
-    basestring = (str, bytes)
-else:
-    range = xrange
-    from itertools import izip as zip
-    iteritems = operator.methodcaller('iteritems')
-    itervalues = operator.methodcaller('itervalues')
-    basestring = (str, unicode)
+iteritems = operator.methodcaller('items')
+itervalues = operator.methodcaller('values')
+basestring = (str, bytes)
 
 
 # ==============================================================================

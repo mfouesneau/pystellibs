@@ -1,32 +1,32 @@
+from typing import Type
 from .interpolator import BaseInterpolator
 from .lejeune import LejeuneInterpolator
 from .ndlinear import NDLinearInterpolator
 
 
-def find_interpolator(name, osl=None, **kwargs):
-    """ Find an interpolator from its name and 
-        instanciate it if an osl was provided
+def find_interpolator(name: str) -> Type[BaseInterpolator]:
+    """Find an interpolator from its name and instanciate it if an osl was provided
 
     Parameters
     ----------
     name: str
         name of the interpolation
-    osl: Stellib instance, optional
-        library to work with
+
+    Returns
+    -------
+    interpolator instance or class if no osl was provided, None if not found
     """
-    mapping = {"lejeune": LejeuneInterpolator,
-               "ndlinear": NDLinearInterpolator,
-               "lejeuneinterpolator": LejeuneInterpolator,
-               "ndlinearinterpolator": NDLinearInterpolator}
+    mapping = {
+        "lejeune": LejeuneInterpolator,
+        "ndlinear": NDLinearInterpolator,
+        "lejeuneinterpolator": LejeuneInterpolator,
+        "ndlinearinterpolator": NDLinearInterpolator,
+    }
+    if isinstance(name, BaseInterpolator):
+        return name
 
-    try:
-        cls = mapping.get(name.lower(), None)
-        if cls is not None:
-            if osl is not None:
-                return cls(osl, **kwargs)
-            else:
-                return cls
-    except AttributeError:
-        pass
-
-    return None
+    cls = mapping.get(name.lower(), None)
+    if cls is not None:
+        return cls
+    else:
+        raise ValueError(f"Interpolator '{name}' not found")
