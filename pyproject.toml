@@ -33,7 +33,7 @@ build-backend = "setuptools.build_meta"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["."]                 # list of folders that contain the packages (["."] by default)
+where = ["src"]                 # list of folders that contain the packages (["."] by default)
 include = ["pystellibs*"]         # package names should match these glob patterns (["*"] by default)
 exclude = ["unittests"]       # exclude packages matching these glob patterns (empty by default)
 namespaces = true             # to disable scanning PEP 420 namespaces (true by default)
