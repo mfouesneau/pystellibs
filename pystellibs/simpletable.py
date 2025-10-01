@@ -805,7 +805,7 @@ def _latex_writeto(filename, tab, comments="%"):
 
     # add notes if any
     if len(tab._desc) > 0:
-        txt += "\% notes \n\\begin{scriptsize}\n"
+        txt += "\\% notes \n\\begin{scriptsize}\n"
         for e, (k, v) in enumerate(tab._desc.items()):
             if v not in (None, "None", "none", ""):
                 txt += "{0:d} {1:s}: {2:s} \\\\\n".format(e, k, v)
@@ -1534,7 +1534,7 @@ class SimpleTable(object):
                 )
                 kwargs.setdefault("names", names)
                 if _pd is not None:  # pandas is faster
-                    kwargs.setdefault("delimiter", "\s+")
+                    kwargs.setdefault("delimiter", r"\s+")
                     kwargs.setdefault("comment", "#")
                     kwargs.setdefault("as_recarray", True)
                     self.data = _pd.read_csv(fname, *args, **kwargs)
