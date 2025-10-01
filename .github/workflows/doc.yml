@@ -1,60 +1,47 @@
-name: documentation
+# Ensure your GitHub Pages settings for this repository are set to deploy with **GitHub Actions**.
 
+name: GitHub Pages Deploy
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
   push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
-  # Also trigger on page_build, as well as release created events
-  page_build:
-  release:
-    types: # This configuration does not affect the page_build event above
-      - created
+    # Runs on pushes targeting the default branch
+    branches: [master]
+env:
+  # `BASE_URL` determines, relative to the root of the domain, the URL that your site is served from.
+  BASE_URL: /${{ github.event.repository.name }}
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
 jobs:
-  build:
-
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-      with:
-        persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
-        fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
-    # - name: Setup tmate session   # Debugging
-    #   uses: mxschmitt/action-tmate@v3
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        pre-build-command: |
-            python -m pip install .
-            python -m pip install ".[docs]"
-            rm -f pystellibs.*rst
-            # re-generate API documentation
-            make apidoc
-        docs-folder: "docs/"
-    # Publish built docs to gh-pages branch.
-    # ===============================
-    - name: Commit documentation changes
-      run: |
-        git clone https://github.com/ammaraskar/sphinx-action-test.git --branch gh-pages --single-branch gh-pages
-        cp -r docs/_build/html/* gh-pages/
-        cd gh-pages
-        touch .nojekyll
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add .
-        git commit -m "Update documentation" -a || true
-        # The above command will fail if no changes were present, so we ignore
-        # that.
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      with:
-        branch: gh-pages
-        directory: gh-pages
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        force: true
-    # ===============================
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: python -m pip install . ".[docs]"
+      - name: Build API docs
+        run: cd docs && make clear && make apidoc
+      - name: Build HTML Assets
+        run: cd docs && make html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'docs/_build/html'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

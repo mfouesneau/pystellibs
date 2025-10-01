@@ -1,6 +1,6 @@
 [project]
 name = "pystellibs"
-version = "1.0.0"
+version = "2.0.0"
 description = "Making synthetic spectra from libraries"
 readme = "README.rst"
 requires-python = ">=3.9"
@@ -9,6 +9,7 @@ dependencies = [
     "scipy>0.9",
     "astropy>5.0",
     "pandas>2.0",
+    "matplotlib>=3.9.4",
 ]
 authors = [{name="Morgan Fouesneau"}]
 classifiers=[
@@ -32,7 +33,7 @@ build-backend = "setuptools.build_meta"
 include-package-data = true
 
 [tool.setuptools.packages.find]
-where = ["."]                 # list of folders that contain the packages (["."] by default)
+where = ["src"]                 # list of folders that contain the packages (["."] by default)
 include = ["pystellibs*"]         # package names should match these glob patterns (["*"] by default)
 exclude = ["unittests"]       # exclude packages matching these glob patterns (empty by default)
 namespaces = true             # to disable scanning PEP 420 namespaces (true by default)
@@ -57,3 +58,10 @@ docs = [
   "IPython>=8.0",
   "matplotlib",
   "numpydoc"]
+
+ci = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "codecov>=2.0",
+  "pre-commit>=2.20",
+]

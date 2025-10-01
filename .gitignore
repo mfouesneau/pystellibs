@@ -1,6 +1,7 @@
 # Other local dev.
 libs
 *unpublished*
+*.lock
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

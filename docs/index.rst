@@ -92,7 +92,7 @@ Quick Start
         plt.ylim(1e25, 5e30)
         plt.tight_layout()
 
-.. image:: single_spec_libs.png
+.. image:: _static/single_spec_libs.png
         :scale: 70 %
 
 * Combining multiple libraries (with priority): the following example combines
@@ -118,7 +118,7 @@ Quick Start
 
         plt.legend(frameon=False, loc='upper left')
 
-.. image:: combined_libs.png
+.. image:: _static/combined_libs.png
         :scale: 70 %
 
 
@@ -128,4 +128,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
