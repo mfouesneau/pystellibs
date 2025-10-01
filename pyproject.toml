@@ -1,6 +1,6 @@
 [project]
 name = "pystellibs"
-version = "1.0.0"
+version = "2.0.0"
 description = "Making synthetic spectra from libraries"
 readme = "README.rst"
 requires-python = ">=3.9"
