@@ -17,12 +17,11 @@ handle specific spectroscopic units.
 
 ## Todolist
 
-- [ ] Add a function to download library files from the link, when missing.
 - [x] Move to astropy units and remove pint dependency. (Astropy already needed)
-- [ ] See if removing simpletable dependency is possible (for pandas DataFrame with aliasing layer)
+- [x] Remove simpletable dependency
 - [x] Documentation fix 
+- [ ] Add a function to download library files from the link, when missing.
 - [ ] Documentation improvement
-- [ ] Remove `pystellibs.future` and use `matplotlib.path.Path` directly (recent versions of matplotlib)
 
 
 ## Known issues
