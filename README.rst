@@ -12,16 +12,16 @@ In this package, multiple spectral libraries and atmosphere libraries are
 provided with a common usage. This allows any user to transparently switch from
 one set of models to another without pain (or combine sets together)
 
-
-This package handles **units** provided through a frozen version of `pint`
-included in this package.
+This package handles **units** provided through Astropy with added values to
+handle specific spectroscopic units.
 
 ## Todolist
 
 - [ ] Add a function to download library files from the link, when missing.
 - [x] Move to astropy units and remove pint dependency. (Astropy already needed)
 - [ ] See if removing simpletable dependency is possible (for pandas DataFrame with aliasing layer)
-- [ ] Documentation fix and improvement
+- [x] Documentation fix 
+- [ ] Documentation improvement
 - [ ] Remove `pystellibs.future` and use `matplotlib.path.Path` directly (recent versions of matplotlib)
 
 
