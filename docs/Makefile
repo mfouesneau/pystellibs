@@ -20,4 +20,8 @@ help:
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
 apidoc:
-	sphinx-apidoc -f -o source/ ../pystellibs
+	sphinx-apidoc -f -o source/ ../src/pystellibs
+
+clear:
+	rm -rf source/*
+	rm -rf _build/*
