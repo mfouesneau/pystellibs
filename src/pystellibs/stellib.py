@@ -846,7 +846,9 @@ class CompositeStellib(Stellib):
             object.__repr__(self), "\n".join([k.name for k in self._olist])
         )
 
-    def get_boundaries(self, dlogT: float = 0.1, dlogg: float = 0.3, **kwargs) -> Path:
+    def get_boundaries(
+        self, dlogT: float = 0.1, dlogg: float = 0.3, **kwargs
+    ) -> Path | MplPath:
         """Returns the closed boundary polygon around the stellar library with
         given margins
 
