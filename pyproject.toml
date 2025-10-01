@@ -9,6 +9,7 @@ dependencies = [
     "scipy>0.9",
     "astropy>5.0",
     "pandas>2.0",
+    "matplotlib>=3.9.4",
 ]
 authors = [{name="Morgan Fouesneau"}]
 classifiers=[
