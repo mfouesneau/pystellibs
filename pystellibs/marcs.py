@@ -200,7 +200,7 @@ class Marcs(AtmosphereLib):
         logT, logg, logL, Z = stars["logT"], stars["logg"], stars["logL"], stars["Z"]
         try:
             alpha = stars["alpha"]
-        except:
+        except Exception:
             alpha = np.zeros_like(logT)
 
         # weights to apply during the interpolation (note that radii must be in cm)
