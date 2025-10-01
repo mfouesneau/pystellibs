@@ -24,10 +24,10 @@ class Munari(AtmosphereLib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "Munari"
         self.source = libsdir + "/atlas9-munari.hires.grid.fits"
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
+        self.name = "Munari"
 
     def _load_(self):
         with pyfits.open(self.source) as f:
@@ -87,15 +87,15 @@ class Munari(AtmosphereLib):
 
     @property
     def logT(self) -> npt.NDArray:
-        return self.grid["logT"]
+        return self.grid["LOGT"]
 
     @property
     def logg(self) -> npt.NDArray:
-        return self.grid["logg"]
+        return self.grid["LOGG"]
 
     @property
     def Teff(self) -> npt.NDArray:
-        return self.grid["Teff"]
+        return self.grid["TEFF"]
 
     @property
     def Z(self) -> npt.NDArray:
@@ -103,4 +103,4 @@ class Munari(AtmosphereLib):
 
     @property
     def logZ(self) -> npt.NDArray:
-        return self.grid["logZ"]
+        return self.grid["LOGZ"]

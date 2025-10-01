@@ -35,10 +35,10 @@ class Tlusty(AtmosphereLib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "Tlusty"
         self.source = libsdir + "/tlusty.lowres.grid.fits"
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
+        self.name = "Tlusty"
 
     def _load_(self):
         with pyfits.open(self.source) as f:

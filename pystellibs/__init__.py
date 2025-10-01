@@ -28,4 +28,13 @@ __all__ = [
     "interpolator",
 ]
 
-libraries = [BaSeL, BTSettl, Elodie, Kurucz, Marcs, Munari, Rauch, Tlusty]
+libraries = {
+    "basel": BaSeL,
+    "btsettl": BTSettl,
+    "elodie": Elodie,
+    "kurucz": Kurucz,
+    "marcs": Marcs,
+    "munari": Munari,
+    "rauch": Rauch,
+    "tlusty": Tlusty,
+}

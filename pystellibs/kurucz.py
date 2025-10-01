@@ -19,10 +19,10 @@ class Kurucz(AtmosphereLib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "Kurucz 2004"
         self.source = libsdir + "/kurucz2004.grid.fits"
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
+        self.name = "Kurucz 2004"
 
     def _load_(self):
         with pyfits.open(self.source) as f:

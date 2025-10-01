@@ -24,10 +24,10 @@ class Rauch(Stellib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "Rauch"
         self.source = libsdir + "/stellib_Rauch.grid.fits"
         self._load_()
-        Stellib.__init__(self, *args, **kwargs)
+        super().__init__(self, *args, **kwargs)
+        self.name = "Rauch"
 
     def _load_(self):
         with pyfits.open(self.source) as f:

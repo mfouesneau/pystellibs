@@ -17,10 +17,12 @@ import sys
 from itertools import groupby
 from typing import Any, Dict, List, Optional, Tuple, Union, override
 
+import matplotlib.patches as patches
 import numpy as np
 import numpy.typing as npt
 import pandas as pd
 from matplotlib.axes import Axes
+from matplotlib.pyplot import gca
 from scipy.interpolate import interp1d
 
 from .astropy_units import Quantity, Unit, has_unit
@@ -163,8 +165,8 @@ class Stellib(object):
             self.interpolator = _default_interpolator(self)
         self._dlogT: float = 0.5
         self._dlogg: float = 0.5
-        self._wavelength: npt.NDArray[np.float64] = np.array([])
-        self.name: str = ""
+        self._wavelength: npt.NDArray[np.float64]
+        self.name: str
         if not hasattr(self, "wavelength_unit"):
             self.wavelength_unit = None
 
@@ -244,7 +246,7 @@ class Stellib(object):
 
     def plot_boundary(
         self,
-        ax: Optional[Axes] = None,
+        ax: Optional[Axes] = None,  # type: ignore
         dlogT: float = 0.0,
         dlogg: float = 0.0,
         **kwargs,
@@ -263,9 +265,6 @@ class Stellib(object):
             :func:`matplotlib.plot`
                 For additional kwargs
         """
-        import matplotlib.patches as patches
-        from pylab import gca
-
         if ax is None:
             ax = gca()
         p = self.get_boundaries(dlogT=dlogT, dlogg=dlogg)

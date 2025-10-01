@@ -30,13 +30,16 @@ class BTSettl(AtmosphereLib):
     """
 
     def __init__(self, medres=True, *args, **kwargs):
-        self.name = "BTSettl"
         if medres:
             self.source = libsdir + "/bt-settl.medres.grid.fits"
+            suffix = "-medres"
         else:
             self.source = libsdir + "/bt-settl.lowres.grid.fits"
+            suffix = "-lowres"
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
+        self.name = "BTSettl" + suffix
+
 
     def _load_(self):
         with pyfits.open(self.source) as f:

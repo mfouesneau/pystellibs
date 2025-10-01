@@ -19,10 +19,10 @@ class Marcs(AtmosphereLib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "MARCS 2008"
         self.source = libsdir + "/marcs.grid.fits"
         self._load_()
         AtmosphereLib.__init__(self, *args, **kwargs)
+        self.name = "MARCS 2008"
 
     def _load_(self):
         with pyfits.open(self.source) as f:

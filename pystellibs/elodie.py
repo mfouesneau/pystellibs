@@ -15,10 +15,10 @@ class Elodie(Stellib):
     """Elodie 3.1 stellar library derived class"""
 
     def __init__(self, *args, **kwargs):
-        self.name = "ELODIE v3.1 (Prugniel et al 2007, astro-ph/703658)"
         self.source = libsdir + "/stellib_ELODIE_3.1.fits"
         self._load_()
         Stellib.__init__(self, *args, **kwargs)
+        self.name = "ELODIE v3.1 (Prugniel et al 2007, astro-ph/703658)"
 
     def _load_(self):
         with pyfits.open(self.source) as f:

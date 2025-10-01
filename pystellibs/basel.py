@@ -29,10 +29,10 @@ class BaSeL(Stellib):
     """
 
     def __init__(self, *args, **kwargs):
-        self.name = "BaSeL 2.2"
         self.source = libsdir + "/stellib_BaSeL_v2.2.grid.fits"
         self._load_()
-        Stellib.__init__(self, *args, **kwargs)
+        super().__init__(self, *args, **kwargs)
+        self.name = "BaSeL 2.2"
 
     def _load_(self):
         with pyfits.open(self.source) as f:
