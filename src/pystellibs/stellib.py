@@ -22,6 +22,7 @@ import numpy as np
 import numpy.typing as npt
 import pandas as pd
 from matplotlib.axes import Axes
+from matplotlib.path import Path as MplPath
 from matplotlib.pyplot import gca
 from scipy.interpolate import interp1d
 
@@ -250,7 +251,7 @@ class Stellib(object):
         dlogT: float = 0.0,
         dlogg: float = 0.0,
         **kwargs,
-    ) -> Path:
+    ) -> Union[Path, MplPath]:
         """
         Parameters
         ----------
@@ -551,7 +552,9 @@ class Stellib(object):
             (10**logl) * lsun / (4.0 * np.pi * sig_stefan * ((10**logt) ** 4))
         )
 
-    def get_boundaries(self, dlogT: float = 0.1, dlogg: float = 0.3, **kwargs) -> Path:
+    def get_boundaries(
+        self, dlogT: float = 0.1, dlogg: float = 0.3, **kwargs
+    ) -> Union[Path, MplPath]:
         """Returns the closed boundary polygon around the stellar library with
         given margins
 
