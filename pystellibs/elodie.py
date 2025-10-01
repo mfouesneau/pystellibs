@@ -94,7 +94,7 @@ class Elodie(Stellib):
         ]
 
         return np.array(bbox)
-    
+
     def get_interpolation_data(self) -> npt.NDArray[np.float64]:
         """Default interpolation"""
         return np.array([self.logT, self.logg, self.logZ]).T

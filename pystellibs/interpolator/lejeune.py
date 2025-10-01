@@ -276,7 +276,7 @@ def __interp__(T0, g0, T,g, dT_max=0.1, eps=1e-6):
 
             # If (T, g) is outside the triangle formed
             # by the three used points use only two points.
-            if ((alpha2 < 0.) | (alpha2 > 1. ) | (alpha3 < 0.) | (alpha3 > 1.) | 
+            if ((alpha2 < 0.) | (alpha2 > 1. ) | (alpha3 < 0.) | (alpha3 > 1.) |
                 (alpha4 < 0.) | (alpha4 > 1. ) ):
                 alpha1 = 0.
                 if (T2 == T3):
@@ -519,10 +519,10 @@ class LejeuneInterpolator(BaseInterpolator):
         self.dlogT_max = dT_max
         self.eps = eps
         self.osl = osl
-        
+
     def interp(self, aps, weights=None, **kwargs):
         return self.interp_other(aps, self.osl.spectra, weights=weights, **kwargs)
-        
+
     def interp_other(self, aps, other, weights=None, **kwargs):
         # get osl data
         osl_logT, osl_logg, osl_logZ = self.osl.get_interpolation_data().T[:3]
@@ -531,7 +531,7 @@ class LejeuneInterpolator(BaseInterpolator):
             values = np.atleast_2d([other]).T
         else:
             values = np.atleast_2d(other)
-        
+
         # params
         library_index = np.arange(len(osl_logT), dtype=int)
         _aps = np.atleast_2d(aps)
@@ -541,27 +541,27 @@ class LejeuneInterpolator(BaseInterpolator):
             _weights = np.ones(len(_aps), dtype=float) * weights
         else:
             _weights = weights
-        
+
         final_values = []
         for current_aps, current_weight in zip(np.atleast_2d(aps), _weights):
             logT, logg, logZ = current_aps
             # logZ = np.log10(Z)
-        
+
             # find Zsup and Zinf
             where = np.searchsorted(grid_logZ, logZ)
             if where >=0:
                 logZinf = grid_logZ[where]
             else:
                 raise ValueError("Metallicity extrapolation")
-            if abs(logZinf - logZ) < 1e-4: 
+            if abs(logZinf - logZ) < 1e-4:
                 # exact match no need to interpolate twice.
                 select = (abs(logZinf - osl_logZ) < 1e-4)
                 # call Pegase interpolation scheme
                 #   Interpolation of the (logT, logg) grid at fixed Z from pegase.2
                 #   it returns the knots'indices from the input data and their weights, resp.
                 #   the final result is then the weighted sum.
-                indices, alphas = __interp__(logT, logg, 
-                                             osl_logT[select], osl_logg[select], 
+                indices, alphas = __interp__(logT, logg,
+                                             osl_logT[select], osl_logg[select],
                                              dT_max=self.dlogT_max, eps=self.eps)
                 # indices are for the selection
                 # if indices[k] = -1, then one corner is rejected
@@ -572,7 +572,7 @@ class LejeuneInterpolator(BaseInterpolator):
                 final_values.append(spectrum * current_weight)
             else:
                 logZsup = grid_logZ[where + 1]
-                # interpolate within each (therefore calling interp with Zinf, Zsup, resp.) 
+                # interpolate within each (therefore calling interp with Zinf, Zsup, resp.)
                 # then linearly interpolate between logZ values.
                 inf_spectrum = self.interp_other((logT, logg, logZinf), values, weights=current_weight, **kwargs)
                 sup_spectrum = self.interp_other((logT, logg, logZsup), values, weights=current_weight, **kwargs)
@@ -607,7 +607,7 @@ class LejeuneInterpolator(BaseInterpolator):
         self.dlogT_max = dT_max
         self.eps = eps
         self.osl = osl
-        
+
     def _osl_interp_weights(self, osl, T0, g0, Z0, dT_max=0.1, eps=1e-6):
         """ Interpolation of the T,g grid
 
@@ -695,33 +695,33 @@ class LejeuneInterpolator(BaseInterpolator):
 
         ind = np.where(weights > 0)
         return index[ind].astype(int), weights[ind]  # / (weights[ind].sum()) #, Z[ind]
-        
-        
+
+
     def _interp_weights(self, aps, weights=None, **kwargs):
-        """ returns interpolation nodes and weights 
-        
+        """ returns interpolation nodes and weights
+
         Parameters
         ----------
         aps: ndarray
-            (logT, logg, logZ) sequence. 
+            (logT, logg, logZ) sequence.
             Or appropriately defined similarly to self.osl.get_interpolation_data
         weights: ndarray
             optional weights of each ap vector to apply during the interpolation
-            
+
         Returns
         -------
         node_weights: array
             osl grid node indices and interpolation weights
         """
         _aps = np.atleast_2d(aps)
-        
+
         if weights is None:
             _weights = np.ones(len(_aps), dtype=float)
         elif np.ndim(weights) == 0:
             _weights = np.ones(len(_aps), dtype=float) * weights
         else:
             _weights = weights
-            
+
         node_weights = []
         for s, current_weight in zip(_aps, _weights):
             logT, logg, logZ = s[:3]
@@ -729,23 +729,23 @@ class LejeuneInterpolator(BaseInterpolator):
             current_nodes = np.array(self._osl_interp_weights(self.osl, logT, logg, Z, **kwargs)).T
             current_nodes[:, 1] *= current_weight
             node_weights.append(current_nodes)
-            
+
         return node_weights
-    
+
     def _evaluate_from_weights(self, r, other):
-        """ Evaluate the interpolation from interpolation nodes and weights 
-        
+        """ Evaluate the interpolation from interpolation nodes and weights
+
         Basically do a weighted sum on the grid using the interpolation weights
-        
+
         Parameters
         ----------
         node_weights: array
             osl grid node indices and interpolation weights
             result of interp_weights
-        
+
         other: array
             values to interpolate
-        
+
         Returns
         -------
         interpolated: ndarray (size(node_weights), )
@@ -757,19 +757,19 @@ class LejeuneInterpolator(BaseInterpolator):
             values = np.atleast_2d(other)
         interpolated = [(((values[rk[:, 0].astype(int)].T) * rk[:, 1])).sum(1) for rk in r]
         return np.squeeze(interpolated)
-    
+
     def interp(self, aps, weights=None, **kwargs):
         """
         Interpolate spectra
-        
+
         Parameters
         ----------
         aps: ndarray
-            (logT, logg, logZ) sequence. 
+            (logT, logg, logZ) sequence.
             Or appropriately defined similarly to self.osl.get_interpolation_data
         weights: ndarray
             optional weights of each ap vector to apply during the interpolation
-            
+
         Returns
         -------
         s0: ndarray (len(aps), len(l0))
@@ -777,20 +777,20 @@ class LejeuneInterpolator(BaseInterpolator):
         """
         s0 = self.interp_other(aps, self.osl.spectra, weights=weights, **kwargs)
         return s0
-    
+
     def interp_other(self, aps, other, weights=None, **kwargs):
-        """ Interpolate other grid values  
-        
+        """ Interpolate other grid values
+
         Basically do a weighted sum on the grid using the interpolation weights
-        
+
         Parameters
         ----------
         aps: ndarray
-            (logT, logg, logZ) sequence. 
+            (logT, logg, logZ) sequence.
             Or appropriately defined similarly to self.osl.get_interpolation_data
         weights: ndarray
             optional weights of each ap vector to apply during the interpolation
-        
+
         Returns
         -------
         interpolated: ndarray (size(node_weights), )

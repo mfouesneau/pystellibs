@@ -57,3 +57,10 @@ docs = [
   "IPython>=8.0",
   "matplotlib",
   "numpydoc"]
+
+ci = [
+  "pytest>=7.0",
+  "pytest-cov>=4.0",
+  "codecov>=2.0",
+  "pre-commit>=2.20",
+]

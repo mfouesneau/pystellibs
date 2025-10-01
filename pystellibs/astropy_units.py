@@ -4,7 +4,7 @@ Declare missing photometric and spectral units for use with astropy.
 from typing import Any
 
 from astropy.units import Unit, def_unit, add_enabled_units
-from astropy.units import Quantity  
+from astropy.units import Quantity
 
 __all__ = ["Unit", "Quantity", "has_unit"]
 
