@@ -71,36 +71,47 @@ def declare_parula():
         [0.9588714286, 0.8949, 0.1132428571],
         [0.9598238095, 0.9218333333, 0.0948380952],
         [0.9661, 0.9514428571, 0.0755333333],
-        [0.9763, 0.9831, 0.0538]]
+        [0.9763, 0.9831, 0.0538],
+    ]
 
-    parula_map = LinearSegmentedColormap.from_list('parula', cm_data)
-    cm.register_cmap('parula', cmap=parula_map)
-    cm.__dict__['parula'] = cm.get_cmap('parula')
-    parula_r_map = LinearSegmentedColormap.from_list('parula_r', cm_data[::-1])
-    cm.register_cmap('parula_r', cmap=parula_r_map)
-    cm.__dict__['parula_r'] = cm.get_cmap('parula_r')
+    parula_map = LinearSegmentedColormap.from_list("parula", cm_data)
+    cm.register_cmap("parula", cmap=parula_map)
+    cm.__dict__["parula"] = cm.get_cmap("parula")
+    parula_r_map = LinearSegmentedColormap.from_list("parula_r", cm_data[::-1])
+    cm.register_cmap("parula_r", cmap=parula_r_map)
+    cm.__dict__["parula_r"] = cm.get_cmap("parula_r")
 
-    parula_map = LinearSegmentedColormap.from_list('parulaW', [[1., 1., 1.]] + cm_data + [[1., 1., 1.]])
-    cm.register_cmap('parulaW', cmap=parula_map)
-    cm.__dict__['parulaW'] = cm.get_cmap('parulaW')
-    parula_r_map = LinearSegmentedColormap.from_list('parulaW_r', ([[1., 1., 1.]] + cm_data + [[1., 1., 1.]])[::-1])
-    cm.register_cmap('parulaW_r', cmap=parula_r_map)
-    cm.__dict__['parulaW_r'] = cm.get_cmap('parulaW_r')
-    parula_r_map = LinearSegmentedColormap.from_list('parulaWb_r', ([[1., 1., 1.]] + cm_data)[::-1])
-    cm.register_cmap('parulaWb_r', cmap=parula_r_map)
-    cm.__dict__['parulaWb_r'] = cm.get_cmap('parulaWb_r')
-    parula_r_map = LinearSegmentedColormap.from_list('parulaWb', ([[1., 1., 1.]] + cm_data))
-    cm.register_cmap('parulaWb', cmap=parula_r_map)
-    cm.__dict__['parulaWb'] = cm.get_cmap('parulaWb')
-    parula_r_map = LinearSegmentedColormap.from_list('parulaWt_r', (cm_data + [[1., 1., 1.]])[::-1])
-    cm.register_cmap('parulaWt_r', cmap=parula_r_map)
-    cm.__dict__['parulaWt_r'] = cm.get_cmap('parulaWt_r')
+    parula_map = LinearSegmentedColormap.from_list(
+        "parulaW", [[1.0, 1.0, 1.0]] + cm_data + [[1.0, 1.0, 1.0]]
+    )
+    cm.register_cmap("parulaW", cmap=parula_map)
+    cm.__dict__["parulaW"] = cm.get_cmap("parulaW")
+    parula_r_map = LinearSegmentedColormap.from_list(
+        "parulaW_r", ([[1.0, 1.0, 1.0]] + cm_data + [[1.0, 1.0, 1.0]])[::-1]
+    )
+    cm.register_cmap("parulaW_r", cmap=parula_r_map)
+    cm.__dict__["parulaW_r"] = cm.get_cmap("parulaW_r")
+    parula_r_map = LinearSegmentedColormap.from_list(
+        "parulaWb_r", ([[1.0, 1.0, 1.0]] + cm_data)[::-1]
+    )
+    cm.register_cmap("parulaWb_r", cmap=parula_r_map)
+    cm.__dict__["parulaWb_r"] = cm.get_cmap("parulaWb_r")
+    parula_r_map = LinearSegmentedColormap.from_list(
+        "parulaWb", ([[1.0, 1.0, 1.0]] + cm_data)
+    )
+    cm.register_cmap("parulaWb", cmap=parula_r_map)
+    cm.__dict__["parulaWb"] = cm.get_cmap("parulaWb")
+    parula_r_map = LinearSegmentedColormap.from_list(
+        "parulaWt_r", (cm_data + [[1.0, 1.0, 1.0]])[::-1]
+    )
+    cm.register_cmap("parulaWt_r", cmap=parula_r_map)
+    cm.__dict__["parulaWt_r"] = cm.get_cmap("parulaWt_r")
 
 
 def theme():
-    rcParams['font.family'] = 'serif'
-    rcParams['text.latex.preamble'] = [r'\usepackage{amsmath}']
-    rcParams['font.size'] = 14
+    rcParams["font.family"] = "serif"
+    rcParams["text.latex.preamble"] = [r"\usepackage{amsmath}"]
+    rcParams["font.size"] = 14
     rcParams["axes.titlesize"] = "x-large"
     rcParams["axes.labelsize"] = "large"
     rcParams["xtick.direction"] = "out"
@@ -113,40 +124,43 @@ def theme():
 
 def solarized_colors():
     # some color cycle
-    COLOR = {"base03": "#002B36",
-             "base02": "#073642",
-             "base01": "#586e75",
-             "base00": "#657b83",
-             "base0": "#839496",
-             "base1": "#93a1a1",
-             "base2": "#eee8d5",
-             "base3": "#fdf6e3",
-             "yellow": "#b58900",
-             "orange": "#cb4b16",
-             "red": "#dc322F",
-             "magenta": "#d33682",
-             "violet": "#6c71c4",
-             "blue": "#268bd2",
-             "cyan": "#2aa198",
-             "green": "#859900"
-             }
+    COLOR = {
+        "base03": "#002B36",
+        "base02": "#073642",
+        "base01": "#586e75",
+        "base00": "#657b83",
+        "base0": "#839496",
+        "base1": "#93a1a1",
+        "base2": "#eee8d5",
+        "base3": "#fdf6e3",
+        "yellow": "#b58900",
+        "orange": "#cb4b16",
+        "red": "#dc322F",
+        "magenta": "#d33682",
+        "violet": "#6c71c4",
+        "blue": "#268bd2",
+        "cyan": "#2aa198",
+        "green": "#859900",
+    }
 
     # ['b', 'g', 'r', 'c', 'm', 'y', 'k']
-    params = {"axes.color_cycle": [
-        COLOR["blue"],
-        COLOR["green"],
-        COLOR["red"],
-        COLOR["cyan"],
-        COLOR["magenta"],
-        COLOR["yellow"],
-        COLOR["base00"] ],
+    params = {
+        "axes.color_cycle": [
+            COLOR["blue"],
+            COLOR["green"],
+            COLOR["red"],
+            COLOR["cyan"],
+            COLOR["magenta"],
+            COLOR["yellow"],
+            COLOR["base00"],
+        ],
     }
 
     rcParams.update(params)
 
 
 class LatexFormatter(Formatter):
-    """ Make Matplotlib use nice latex formatting
+    """Make Matplotlib use nice latex formatting
 
     Attributes
     ----------
@@ -162,7 +176,8 @@ class LatexFormatter(Formatter):
         cb = plt.colorbar(im, shrink=0.9, pad=0.01, extend=extend,
                           format=LatexFormatter(precision=0.2, delimiter='\cdot'))
     """
-    def __init__(self, precision=2.3, fmt='g', delimiter=r'\times'):
+
+    def __init__(self, precision=2.3, fmt="g", delimiter=r"\times"):
         self.precision = precision
         self.delimiter = delimiter
         self.fmt = fmt
@@ -171,9 +186,7 @@ class LatexFormatter(Formatter):
         float_str = ("{0:" + str(self.precision) + self.fmt + "}").format(f)
         if "e" in float_str:
             base, exponent = float_str.split("e")
-            return (r"${0}{2}10^{{{1}}}$").format(base,
-                                                  int(exponent),
-                                                  self.delimiter)
+            return (r"${0}{2}10^{{{1}}}$").format(base, int(exponent), self.delimiter)
         else:
             return float_str
 
