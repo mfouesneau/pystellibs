@@ -7,7 +7,7 @@ import numpy.typing as npt
 from astropy.io import fits as pyfits
 
 from .config import libsdir
-from .simpletable import SimpleTable
+from .grid import Grid
 from .stellib import Stellib
 
 
@@ -52,8 +52,7 @@ class BaSeL(Stellib):
         self.wavelength_unit = "angstrom"
 
     def _getTGZ_(self, f: Sequence[pyfits.TableHDU]):
-        self.grid = SimpleTable(f[1].data)
-        self.grid.header.update(f[1].header.items())
+        self.grid = Grid(np.array(f[1].data), dict(f[1].header.items()))
         self.grid.header["NAME"] = "TGZ"
 
     def bbox(self, dlogT: float = 0.05, dlogg: float = 0.25) -> npt.NDArray[np.float64]:

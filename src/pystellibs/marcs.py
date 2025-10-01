@@ -5,8 +5,8 @@ import numpy.typing as npt
 from astropy.io import fits as pyfits
 
 from .config import libsdir
-from .simpletable import SimpleTable
 from .stellib import AtmosphereLib
+from .grid import Grid
 
 
 class Marcs(AtmosphereLib):
@@ -39,8 +39,7 @@ class Marcs(AtmosphereLib):
         self._wavelength = np.array(f[0].data[-1])
 
     def _getTGZ_(self, f: Sequence[pyfits.TableHDU]):
-        self.grid = SimpleTable(f[1].data)
-        self.grid.header.update(f[1].header.items())
+        self.grid = Grid(np.array(f[1].data), dict(f[1].header.items()))
         self.grid.header["NAME"] = "TGZ"
 
     def _getSpectra_(self, f: Sequence[pyfits.TableHDU]):
