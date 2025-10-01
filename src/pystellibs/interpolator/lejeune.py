@@ -33,7 +33,7 @@ def __det3x3__(a):
 
 
 def __interp__(T0, g0, T, g, dT_max=0.1, eps=1e-6):
-    """
+    r"""
     Interpolation of the (T,g) grid at fixed Z
 
     Translated from Pegase.2 fortran version
@@ -173,6 +173,12 @@ def __interp__(T0, g0, T, g, dT_max=0.1, eps=1e-6):
 
     if (i1 < 0) & (i2 < 0) & (i3 < 0) & (i4 < 0):
         raise ValueError("Interp. Error, could not find appropriate knots")
+
+    # initialization
+    alpha1 = 0.0
+    alpha2 = 0.0
+    alpha3 = 0.0
+    alpha4 = 1.0
 
     # Interpolation in the (T, g) plane between the used points
     # (at least 1, at most 4).
