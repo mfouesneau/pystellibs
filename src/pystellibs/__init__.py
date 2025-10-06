@@ -7,7 +7,6 @@ from .kurucz import Kurucz
 from .marcs import Marcs
 from .munari import Munari
 from .rauch import Rauch
-from .simpletable import SimpleTable
 from .stellib import AtmosphereLib, CompositeStellib, Stellib
 from .tlusty import Tlusty
 
@@ -21,7 +20,6 @@ __all__ = [
     "Marcs",
     "Munari",
     "Rauch",
-    "SimpleTable",
     "Stellib",
     "Tlusty",
     "Unit",
